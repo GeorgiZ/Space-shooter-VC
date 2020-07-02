@@ -144,5 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserSpeed: 8
-  ExplodingEnamy: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
+  ExplodingEnemy: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
     type: 3}

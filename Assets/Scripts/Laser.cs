@@ -7,6 +7,9 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private float laserSpeed;
 
+    [SerializeField]
+    private GameObject ExplodingEnemy;
+
 
     void Update()
     {
@@ -31,7 +34,7 @@ public class Laser : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            GameObject clone  = Instantiate(ExplodingEnamy, collision.transform.position, Quaternion.identity);
+            GameObject clone  = Instantiate(ExplodingEnemy, collision.transform.position, Quaternion.identity);
             Destroy(clone, 1.47f);
 
         }
