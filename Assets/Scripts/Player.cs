@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
     {
 
         Movement();
+        Thrust();
         SpaceToShoot();
         DestroyTripleShot();
         Shield();
@@ -114,6 +115,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Thrust()
+    {
+        if ( Input.GetKey(KeyCode.LeftShift))
+        {
+            _speed = _speed * 1.3f;
+        }
+    }
+
     private void Shoot()
     {
         _canFire = Time.time + _fireRate;
@@ -133,6 +142,7 @@ public class Player : MonoBehaviour
             
     }
 
+    //moved Shoot() in a separate method, not to have nested if statements in Shoot().
     private void SpaceToShoot()
     {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
