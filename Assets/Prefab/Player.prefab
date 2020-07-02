@@ -166,8 +166,9 @@ MonoBehaviour:
   _audioSource: {fileID: 658188891}
   ExplodingEnamy: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
     type: 3}
-  laser: {fileID: 1520708806000152999, guid: 2a72f9414655a514abe46026fdaa3e9d, type: 3}
   shield: {fileID: 1464513227046764798}
+  shieldCharges: 0
+  laser: {fileID: 1520708806000152999, guid: 2a72f9414655a514abe46026fdaa3e9d, type: 3}
 --- !u!61 &-3192186921509188350
 BoxCollider2D:
   m_ObjectHideFlags: 0

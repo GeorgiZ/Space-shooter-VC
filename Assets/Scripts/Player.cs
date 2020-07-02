@@ -44,14 +44,20 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject ExplodingEnamy;
+
+    [SerializeField]
+    private GameObject shield;
+
+    [SerializeField]
+    private int shieldCharges;
+
+
+    //private Shield_Strenght _shieldRemaining;
     private Ui_Manager _uiManager;
     private int DmgAmaunt = 1;
     private float _canFire = 0f;
     private SpawnManager _spawnManager;
     public GameObject laser;
-    public GameObject shield;
-
-
 
 
     // Start is called before the first frame update
@@ -62,7 +68,8 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = _laser;
-        
+
+
     }
 
     void Update()
@@ -73,8 +80,12 @@ public class Player : MonoBehaviour
         SpaceToShoot();
         DestroyTripleShot();
         Shield();
-
+        replenishShield(); // shield cannot be below 0 and above 3 ( replenish to 3 if 0 < shield < 3 )
+        shieldcolour();
         PlayerOnFire();
+        Debug.Log(shieldCharges);
+  
+        
 
     }
 
@@ -153,14 +164,16 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-
-        if (isShieldActive == true)
+        
+        if (isShieldActive == true && shieldCharges == 0)
         {
+ 
             isShieldActive = false;
             shield.SetActive(false);
             return;
         }
         _lives -= DmgAmaunt;
+        shieldCharges -= 1;
 
         _uiManager.ChangeLives(_lives);
 
@@ -171,7 +184,7 @@ public class Player : MonoBehaviour
             
             
         }
-    } 
+    }
 
     public void Shield()
     {
@@ -183,7 +196,8 @@ public class Player : MonoBehaviour
         {
             DmgAmaunt = 1;
         }
-    }
+
+    }   
 
     public void DestroyTripleShot()
     {
@@ -223,6 +237,7 @@ public class Player : MonoBehaviour
 
     public void ShieldActive()
     {
+        
         isShieldActive = true;
         shield.SetActive(true);
         
@@ -269,7 +284,46 @@ public class Player : MonoBehaviour
         {
             Damage();
         }
+
     }
+
+    public void setShield()
+    {
+        shieldCharges = 3;
+    }
+
+    private void replenishShield()
+    {
+        if (shieldCharges < 0)
+        {
+            shieldCharges = 0;
+        }
+        else if (shieldCharges > 3)
+        {
+            shieldCharges = 3;
+        }
+    }
+
+    private void shieldcolour()
+    {
+        switch (shieldCharges)
+        {
+            case 0:
+                shield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
+                break;
+            case 1:
+                shield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.2f);
+                break;
+            case 2:
+                shield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.4f);
+                break;
+            case 3:
+                shield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                break;
+
+        }
+    }
+
 
 }
  

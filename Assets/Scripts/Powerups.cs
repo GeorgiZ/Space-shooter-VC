@@ -32,7 +32,7 @@ public class Powerups : MonoBehaviour
     private void PowerupMovement()
     {
         transform.Translate(powerupDirection * speed * Time.deltaTime);
-        if (transform.position.y <= -5.35f)
+        if (transform.position.y <= -7.34f)
         {
             Destroy(this.gameObject);
         }
@@ -42,6 +42,7 @@ public class Powerups : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+         
             soundsource.Play();
             switch(PowerupID)
             {
@@ -52,10 +53,13 @@ public class Powerups : MonoBehaviour
                     collision.GetComponent<Player>().SpeedActive();
                     break;
                 case 2:
+                    collision.GetComponent<Player>().setShield();
                     collision.GetComponent<Player>().ShieldActive();
+                    
                     break;
             }
-
+            
+            //the sound needs to finish playing
             turnoffrender.enabled = false;
             Destroy(gameObject, 0.8f);
             
