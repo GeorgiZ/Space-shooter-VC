@@ -11,6 +11,7 @@ TagManager:
   - Asteroid
   - Elaser
   - shield
+  - ammo
   layers:
   - Default
   - TransparentFX

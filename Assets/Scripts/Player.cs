@@ -81,14 +81,12 @@ public class Player : MonoBehaviour
         Movement();
         Thrust();
         SpaceToShoot();
+        ammunitionToZero();
         DestroyTripleShot();
         Shield();
         replenishShield(); // shield cannot be below 0 and above 3 ( replenish to 3 if 0 < shield < 3 )
         shieldcolour();
         PlayerOnFire();
-        Debug.Log(shieldCharges);
-  
-        
 
     }
 
@@ -141,10 +139,7 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;
 
-        if (ammunition <= 0)
-        {
-            return;
-        }
+        
 
         if ( isTripleShotActive == true)
         {
@@ -164,14 +159,15 @@ public class Player : MonoBehaviour
     //moved Shoot() in a separate method, not to have nested if statements in Shoot().
     private void SpaceToShoot()
     {
+        _uiManager.UpdateAmmo(ammunition);
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            _uiManager.UpdateAmmo(ammunition);
-            ammunition -= 1;
-            if (ammunition < 0)
+            if (ammunition == 0)
             {
-                ammunition = 0;
+                return;
             }
+            ammunition -= 1;
+   
             Shoot();
             
         }
@@ -295,9 +291,13 @@ public class Player : MonoBehaviour
             Destroy(clone, 1.47f);
 
         }
-        if (collision.tag == "Elaser")
+        else if (collision.tag == "Elaser")
         {
             Damage();
+        }
+        else if(collision.tag == "ammo")
+        {
+            ammunition += 10;
         }
 
     }
@@ -339,6 +339,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void ammunitionToZero()
+    {
+        if (ammunition <= 0)
+        {
+            ammunition = 0;
+        }
+    }
 
 }
  
