@@ -20,6 +20,9 @@ public class Ui_Manager : MonoBehaviour
     [SerializeField]
     private GameObject Restart_Game_Text;
 
+    [SerializeField]
+    private Text _ammoCount;
+
     private Player ThePlayer;
 
 
@@ -40,6 +43,12 @@ public class Ui_Manager : MonoBehaviour
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score :" + playerScore;
+    }
+
+    public void UpdateAmmo(int ammo)
+    {
+        _ammoCount.text = "Ammo : " + ammo;
+        
     }
 
     IEnumerator GmaeOverBehaviour()

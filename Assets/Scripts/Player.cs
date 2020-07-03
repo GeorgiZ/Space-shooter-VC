@@ -52,7 +52,9 @@ public class Player : MonoBehaviour
     private int shieldCharges;
 
 
-    //private Shield_Strenght _shieldRemaining;
+
+
+    private int ammunition;
     private Ui_Manager _uiManager;
     private int DmgAmaunt = 1;
     private float _canFire = 0f;
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = _laser;
+        ammunition = 15;
 
 
     }
@@ -138,6 +141,11 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;
 
+        if (ammunition <= 0)
+        {
+            return;
+        }
+
         if ( isTripleShotActive == true)
         {
             Instantiate(TripleShot, transform.position, Quaternion.identity);
@@ -158,7 +166,14 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
+            _uiManager.UpdateAmmo(ammunition);
+            ammunition -= 1;
+            if (ammunition < 0)
+            {
+                ammunition = 0;
+            }
             Shoot();
+            
         }
     }
 
