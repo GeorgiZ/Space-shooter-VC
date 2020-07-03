@@ -81,13 +81,16 @@ public class Player : MonoBehaviour
         Movement();
         Thrust();
         SpaceToShoot();
-        ammunitionToZero();
+        AmmunitionToZero();
         DestroyTripleShot();
         Shield();
+        SetMaxLives();
         replenishShield(); // shield cannot be below 0 and above 3 ( replenish to 3 if 0 < shield < 3 )
         shieldcolour();
         PlayerOnFire();
-
+        _uiManager.ChangeLives(_lives);
+      // Debug.Log(_lives);
+      //  Debug.Log(shieldCharges);
     }
 
     public void Movement()
@@ -160,6 +163,7 @@ public class Player : MonoBehaviour
     private void SpaceToShoot()
     {
         _uiManager.UpdateAmmo(ammunition);
+
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             if (ammunition == 0)
@@ -176,7 +180,7 @@ public class Player : MonoBehaviour
     public void Damage()
     {
         
-        if (isShieldActive == true && shieldCharges == 0)
+        if (isShieldActive == true && shieldCharges == 1)
         {
  
             isShieldActive = false;
@@ -186,7 +190,7 @@ public class Player : MonoBehaviour
         _lives -= DmgAmaunt;
         shieldCharges -= 1;
 
-        _uiManager.ChangeLives(_lives);
+       _uiManager.ChangeLives(_lives);
 
         if ( _lives <= 0)
         {
@@ -273,13 +277,20 @@ public class Player : MonoBehaviour
 
     private void PlayerOnFire()
     {
-        if (_lives == 2)
+        if (_lives < 3 && _lives > 1)
         {
             LeftWingFire.SetActive(true);
+            RightWingFire.SetActive(false);
         }
-        else if (_lives == 1)
+        else if (_lives < 2)
         {
             RightWingFire.SetActive(true);
+            LeftWingFire.SetActive(true);
+        }
+        else
+        {
+            RightWingFire.SetActive(false);
+            LeftWingFire.SetActive(false);
         }
     }
 
@@ -298,6 +309,10 @@ public class Player : MonoBehaviour
         else if(collision.tag == "ammo")
         {
             ammunition += 10;
+        }
+        else if(collision.tag == "heal")
+        {
+            _lives += 1;
         }
 
     }
@@ -339,11 +354,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ammunitionToZero()
+    private void AmmunitionToZero()
     {
         if (ammunition <= 0)
         {
             ammunition = 0;
+        }
+    }
+
+    private void SetMaxLives()
+    {
+        if (_lives > 3)
+        {
+            _lives = 3;
         }
     }
 

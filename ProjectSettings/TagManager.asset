@@ -12,6 +12,7 @@ TagManager:
   - Elaser
   - shield
   - ammo
+  - heal
   layers:
   - Default
   - TransparentFX
