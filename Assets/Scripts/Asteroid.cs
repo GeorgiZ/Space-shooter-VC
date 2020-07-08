@@ -47,6 +47,14 @@ public class Asteroid : MonoBehaviour
             
             Destroy(gameObject, 2.6f);
         }
+        else if(collision.tag == "rocket")
+        {
+            asteroid.SetTrigger("AsteroidExplosion");
+            boom.Play();
+            _spawn.StartSpawning();
+            Destroy(gameObject, 2.6f);
+            Destroy(collision.gameObject);
+        }
     }
 
     private void AsteroidRotation()

@@ -13,8 +13,6 @@ public class Enemy : MonoBehaviour
 
     Vector3 enemyDirection = new Vector3(0, -1, 0);
 
-    public int damage = 10;
-
     private Player _player;
 
     private float _FireSpeed;
@@ -34,7 +32,8 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         EnemyBehaviour();
-        EnemyShoot();      
+        EnemyShoot();   
+        
     }
 
     private void EnemyBehaviour()
@@ -68,6 +67,9 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
 
         }
+
+        
+
     }
 
     private void EnemyShoot()
@@ -82,6 +84,9 @@ public class Enemy : MonoBehaviour
         
 
     }
+
+    
+
 
 
 }

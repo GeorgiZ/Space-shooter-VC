@@ -55,8 +55,11 @@ public class Powerups : MonoBehaviour
                 case 2:
                     collision.GetComponent<Player>().setShield();
                     collision.GetComponent<Player>().ShieldActive();
-                    
                     break;
+                case 5:
+                    collision.GetComponent<Player>().RocketsActive();
+                    break;
+                
             }
             
             //the sound needs to finish playing

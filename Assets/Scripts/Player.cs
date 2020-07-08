@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     private float _speed = 10.0f;
 
     [SerializeField]
+    private bool _isRocketActive = false;
+
+    [SerializeField]
     private bool isTripleShotActive = false;
 
     [SerializeField]
@@ -50,6 +53,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int shieldCharges;
+
+    [SerializeField]
+    private GameObject Rocket;
 
 
 
@@ -89,8 +95,7 @@ public class Player : MonoBehaviour
         shieldcolour();
         PlayerOnFire();
         _uiManager.ChangeLives(_lives);
-      // Debug.Log(_lives);
-      //  Debug.Log(shieldCharges);
+
     }
 
     public void Movement()
@@ -149,9 +154,14 @@ public class Player : MonoBehaviour
             Instantiate(TripleShot, transform.position, Quaternion.identity);
             
         }
+        else if (_isRocketActive == true)
+        {
+            Instantiate(Rocket, transform.position, Quaternion.identity);
+                
+        }
         else
         {
-            
+
             Instantiate(laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
 
@@ -234,6 +244,21 @@ public class Player : MonoBehaviour
         {
             yield return new WaitForSeconds(5.0f);
             isTripleShotActive = false;
+        }
+    }
+
+    public void RocketsActive()
+    {
+        _isRocketActive = true;
+        StartCoroutine(RocketDownRoutine());
+    }
+
+    IEnumerator RocketDownRoutine()
+    {
+        if (_isRocketActive == true)
+        {
+            yield return new WaitForSeconds(5.0f);
+            _isRocketActive = false;
         }
     }
 

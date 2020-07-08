@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lives: 3
   _speed: 10
+  _isRocketActive: 1
   isTripleShotActive: 0
   isSpeedActive: 0
   isShieldActive: 0
@@ -168,6 +169,7 @@ MonoBehaviour:
     type: 3}
   shield: {fileID: 1464513227046764798}
   shieldCharges: 0
+  Rocket: {fileID: 0}
   laser: {fileID: 1520708806000152999, guid: 2a72f9414655a514abe46026fdaa3e9d, type: 3}
 --- !u!61 &-3192186921509188350
 BoxCollider2D:
