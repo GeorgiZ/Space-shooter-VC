@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
     private float _canFire = 0f;
     private SpawnManager _spawnManager;
     public GameObject laser;
+    private float bar;
 
 
     // Start is called before the first frame update
@@ -137,9 +138,10 @@ public class Player : MonoBehaviour
 
     private void Thrust()
     {
-        if ( Input.GetKey(KeyCode.LeftShift))
+        bar = GameObject.Find("Canvas").GetComponent<Ui_Manager>()._barX;
+        if ( Input.GetKey(KeyCode.LeftShift) && bar != 0)
         {
-            _speed = _speed * 1.3f;
+            _speed = _speed * 1.4f;
         }
     }
 

@@ -65,7 +65,7 @@ public class SpawnManager : MonoBehaviour
             Vector3 random = new Vector3(randomX, 6.9f, 0f);
 
             Instantiate(RarePowerup[0], random, Quaternion.identity);
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(15);
         }
         
     }

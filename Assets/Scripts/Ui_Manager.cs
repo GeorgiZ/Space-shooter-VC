@@ -24,6 +24,10 @@ public class Ui_Manager : MonoBehaviour
     private Text _ammoCount;
 
     private Player ThePlayer;
+    [SerializeField]
+    private Transform bar;
+    public float _barX = 1;
+    private float maxBar = 1f;
 
 
     // Start is called before the first frame update
@@ -31,6 +35,8 @@ public class Ui_Manager : MonoBehaviour
     {
         ThePlayer = GameObject.Find("Player").GetComponent<Player>();
         _scoreText.text = "Score : " + 0;
+        StartCoroutine(Bar());
+        
     }
 
     private void Update()
@@ -38,6 +44,7 @@ public class Ui_Manager : MonoBehaviour
         //Restart();
         ThePlayer.CheckLives();
         Quit();
+
     }
 
     public void UpdateScore(int playerScore)
@@ -84,5 +91,38 @@ public class Ui_Manager : MonoBehaviour
             Application.Quit();
         }
     }
+
+    private void BarVisualization()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+           
+            bar.localScale = new Vector3(_barX, 1f);
+            _barX = _barX - 0.1f;
+            
+        }
+        else if(_barX < maxBar)
+        {
+            _barX = _barX + 0.1f;
+            bar.localScale = new Vector3(_barX, 1f);
+            
+        }
+    }
+
+    IEnumerator Bar()
+    {
+        while(1 > 0)
+        {
+            yield return new WaitForSeconds(0.2f);
+            BarVisualization();
+            if(_barX < 0)
+            {
+                _barX = 0;
+            }
+        }
+  
+    }
+
+    
   
 }
