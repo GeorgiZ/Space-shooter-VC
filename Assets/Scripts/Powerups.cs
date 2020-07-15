@@ -8,6 +8,7 @@ public class Powerups : MonoBehaviour
     [SerializeField] private int PowerupID;
     [SerializeField] private AudioSource soundsource;
 
+    BoxCollider2D PowerupCollider;
     public Renderer turnoffrender;
     Vector3 powerupDirection = new Vector3(0, -1, 0);
 
@@ -15,6 +16,7 @@ public class Powerups : MonoBehaviour
     {
         soundsource = GetComponent<AudioSource>();
         turnoffrender = GetComponent<Renderer>();
+        PowerupCollider = gameObject.GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -40,16 +42,20 @@ public class Powerups : MonoBehaviour
             {
                 case 0:
                     collision.GetComponent<Player>().TripleShotActive();
+                    PowerupCollider.enabled = false;
                     break;
                 case 1:
                     collision.GetComponent<Player>().SpeedActive();
+                    PowerupCollider.enabled = false;
                     break;
                 case 2:
                     collision.GetComponent<Player>().setShield(); //set shield charges to 3
                     collision.GetComponent<Player>().ShieldActive();
+                    PowerupCollider.enabled = false;
                     break;
                 case 5:
                     collision.GetComponent<Player>().RocketsActive();
+                    PowerupCollider.enabled = false;
                     break;              
             }
             
