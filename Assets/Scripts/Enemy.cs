@@ -3,37 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
-{
-    
-    [SerializeField]
-    private int _enemySpeed = 10;
-
-    [SerializeField]
-    private GameObject EnemyLaser;
+{    
+    [SerializeField] private int _enemySpeed = 10;
+    [SerializeField] private GameObject EnemyLaser;
 
     Vector3 enemyDirection = new Vector3(0, -1, 0);
-
     private Player _player;
-
     private float _FireSpeed;
-
     private float _canFire = -1f;
-
-
-
-    
 
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-
     }
 
     void Update()
     {
         EnemyBehaviour();
-        EnemyShoot();   
-        
+        EnemyShoot();           
     }
 
     private void EnemyBehaviour()
@@ -49,12 +36,9 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
-        {
-            
+        {          
             other.GetComponent<Player>().Damage();
             Destroy(gameObject);
-            
-
         }
         else if (other.tag == "Laser")
         {
@@ -63,13 +47,8 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore();
             }
-
             Destroy(gameObject);
-
         }
-
-        
-
     }
 
     private void EnemyShoot()
@@ -78,15 +57,7 @@ public class Enemy : MonoBehaviour
         {
             _FireSpeed = Random.Range(2f, 4f);
             _canFire = Time.time + _FireSpeed;
-            GameObject clone = Instantiate(EnemyLaser, transform.position, Quaternion.identity);
-            
-        }
-        
-
+            GameObject clone = Instantiate(EnemyLaser, transform.position, Quaternion.identity);           
+        }       
     }
-
-    
-
-
-
 }

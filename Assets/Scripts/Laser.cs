@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    [SerializeField]
-    private float laserSpeed;
-
-    [SerializeField]
-    private GameObject ExplodingEnemy;
-
+    [SerializeField] private float laserSpeed;
+    [SerializeField] private GameObject ExplodingEnemy;
 
     void Update()
     {
-        LaserBehaviour();
-        
+        LaserBehaviour();       
     }
 
     public void LaserBehaviour()
@@ -36,7 +31,6 @@ public class Laser : MonoBehaviour
         {
             GameObject clone  = Instantiate(ExplodingEnemy, collision.transform.position, Quaternion.identity);
             Destroy(clone, 1.47f);
-
         }
     }
 }

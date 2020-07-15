@@ -4,19 +4,9 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    [SerializeField]
-    private float _rSpeed = 3f;
+    [SerializeField] private float _rSpeed = 3f;
+    [SerializeField] private GameObject ExplodingRocket;
 
-    [SerializeField]
-    private GameObject ExplodingRocket;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         RocketBehaviour();
@@ -39,11 +29,12 @@ public class Rocket : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
+            //destroys the rocket object on collision withthe enemy and starts its animation
+            //the object "ExplodingRocket" with the animation mentioned has a child game object with a colliding radius to kill multiple enemies
             GameObject clone = Instantiate(ExplodingRocket, transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
             Destroy(gameObject);
             Destroy(clone, 0.8f);
-
         }
     }
 }

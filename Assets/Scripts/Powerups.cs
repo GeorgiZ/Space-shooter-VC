@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class Powerups : MonoBehaviour
 {
-    [SerializeField]
-    private int speed = 3;
-
-    [SerializeField]
-    private int PowerupID;
-
-    [SerializeField]
-    private AudioSource soundsource;
+    [SerializeField] private int speed = 3;
+    [SerializeField] private int PowerupID;
+    [SerializeField] private AudioSource soundsource;
 
     public Renderer turnoffrender;
-
     Vector3 powerupDirection = new Vector3(0, -1, 0);
 
     private void Start()
@@ -28,7 +22,6 @@ public class Powerups : MonoBehaviour
         PowerupMovement();
     }
 
-
     private void PowerupMovement()
     {
         transform.Translate(powerupDirection * speed * Time.deltaTime);
@@ -41,8 +34,7 @@ public class Powerups : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
-        {
-         
+        {      
             soundsource.Play();
             switch(PowerupID)
             {
@@ -53,23 +45,17 @@ public class Powerups : MonoBehaviour
                     collision.GetComponent<Player>().SpeedActive();
                     break;
                 case 2:
-                    collision.GetComponent<Player>().setShield();
+                    collision.GetComponent<Player>().setShield(); //set shield charges to 3
                     collision.GetComponent<Player>().ShieldActive();
                     break;
                 case 5:
                     collision.GetComponent<Player>().RocketsActive();
-                    break;
-                
+                    break;              
             }
             
             //the sound needs to finish playing
             turnoffrender.enabled = false;
-            Destroy(gameObject, 0.8f);
-            
+            Destroy(gameObject, 0.8f);           
         }
-
     }
-
-
-
 }

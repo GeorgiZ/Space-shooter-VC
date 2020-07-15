@@ -4,27 +4,11 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    
-    
-   // [SerializeField]
-    //private GameObject _enemyContainer;
+    [SerializeField] private GameObject[] Powerup;
+    [SerializeField] private GameObject[] RarePowerup;
 
     public GameObject Enemy;
-
-    [SerializeField]
-    private GameObject[] Powerup;
-
-    [SerializeField]
-    private GameObject[] RarePowerup;
-
     private bool _stopSpawning = false;
-    
-    void Start()
-    {
-        
-
-    }
-
 
     IEnumerator SpawningEnemies()
     {
@@ -50,9 +34,7 @@ public class SpawnManager : MonoBehaviour
             int randomPowerup = Random.Range(0, 5);
             
             Instantiate(Powerup[randomPowerup], random, Quaternion.identity);
-            yield return new WaitForSeconds(5);
-
-          
+            yield return new WaitForSeconds(5); 
         }
     }
 
@@ -81,7 +63,4 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnPowerup());
         StartCoroutine(SpawnRarePowerup());
     }
-
-    
-
 }
