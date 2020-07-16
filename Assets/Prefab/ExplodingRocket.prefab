@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6179019568010374401}
   - component: {fileID: 2091116810548061636}
-  - component: {fileID: 290907209}
+  - component: {fileID: 1956638490}
   m_Layer: 0
   m_Name: Explosion Radius
   m_TagString: ExplosionRadius
@@ -48,7 +48,7 @@ CircleCollider2D:
   m_Offset: {x: -0.006145239, y: 0}
   serializedVersion: 2
   m_Radius: 1.9718864
---- !u!114 &290907209
+--- !u!114 &1956638490
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

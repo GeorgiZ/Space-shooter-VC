@@ -53,6 +53,9 @@ public class Powerups : MonoBehaviour
                     collision.GetComponent<Player>().ShieldActive();
                     PowerupCollider.enabled = false;
                     break;
+                case 3:
+                    PowerupCollider.enabled = false;
+                    break;
                 case 4:
                     PowerupCollider.enabled = false;
                     break;
