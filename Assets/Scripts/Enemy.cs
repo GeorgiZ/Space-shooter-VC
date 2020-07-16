@@ -9,12 +9,14 @@ public class Enemy : MonoBehaviour
 
     Vector3 enemyDirection = new Vector3(0, -1, 0);
     private Player _player;
+    private Ui_Manager _uiManager;
     private float _FireSpeed;
     private float _canFire = -1f;
 
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
     }
 
     void Update()
@@ -39,6 +41,7 @@ public class Enemy : MonoBehaviour
         {          
             other.GetComponent<Player>().Damage();
             Destroy(gameObject);
+            _player.AddScore();
         }
         else if (other.tag == "Laser")
         {
@@ -48,6 +51,12 @@ public class Enemy : MonoBehaviour
                 _player.AddScore();
             }
             Destroy(gameObject);
+        }
+        else if(other.tag == "ExplosionRadius")
+        {
+            _player._score += 10;
+            _uiManager.UpdateScore(_player._score);
+            
         }
     }
 

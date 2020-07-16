@@ -15,6 +15,7 @@ TagManager:
   - heal
   - rocket
   - RocketPowerup
+  - ExplosionRadius
   layers:
   - Default
   - TransparentFX

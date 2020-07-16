@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isSpeedActive = false;
     [SerializeField] private bool _isShieldActive = false;
     [SerializeField] private float _fireRate = 0.5f;
-    [SerializeField] private int _score;
+    [SerializeField] public int _score;
     [SerializeField] private int _shieldCharges;
     [SerializeField] private GameObject TripleShot;
     [SerializeField] private GameObject LeftWingFire;

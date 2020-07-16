@@ -7,6 +7,13 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float _rSpeed = 3f;
     [SerializeField] private GameObject ExplodingRocket;
 
+    private Player _player;
+
+    private void Start()
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>();      
+    }
+
     void Update()
     {
         RocketBehaviour();
@@ -31,7 +38,8 @@ public class Rocket : MonoBehaviour
         {
             //destroys the rocket object on collision withthe enemy and starts its animation
             //the object "ExplodingRocket" with the animation mentioned has a child game object with a colliding radius to kill multiple enemies
-            GameObject clone = Instantiate(ExplodingRocket, transform.position, Quaternion.identity);
+            _player.AddScore();
+            GameObject clone = Instantiate(ExplodingRocket, transform.position, Quaternion.identity);          
             Destroy(collision.gameObject);
             Destroy(gameObject);
             Destroy(clone, 0.8f);
