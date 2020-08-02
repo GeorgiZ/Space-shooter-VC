@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
-{    
+{
+    [SerializeField] private GameObject ExplodingEnemy;
     [SerializeField] private int _enemySpeed = 10;
     [SerializeField] private GameObject EnemyLaser;
+    [SerializeField] private CameraShake _Camera;
+    [SerializeField] private float _amplitude;
+    [SerializeField] private float _frequency;
 
-    Vector3 enemyDirection = new Vector3(0, -1, 0);
+    Vector3 enemyPosition;
     private Player _player;
     private Ui_Manager _uiManager;
     private float _FireSpeed;
@@ -15,22 +19,27 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        _Camera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _uiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
+        enemyPosition = transform.position;
     }
 
     void Update()
-    {
+    { 
         EnemyBehaviour();
-        EnemyShoot();           
+        EnemyShoot();
+        enemyPosition = transform.position;
     }
 
     private void EnemyBehaviour()
     {
-        transform.Translate(enemyDirection * _enemySpeed * Time.deltaTime);
-        if(transform.position.y <= -5.35f)
+        enemyPosition -= transform.up * Time.deltaTime * _enemySpeed;
+        transform.position = enemyPosition - transform.right * Mathf.Sin(Time.time * _frequency) * _amplitude; //side movement
+
+        if (transform.position.y <= -5.35f)
         {
-            float randomX = Random.Range(-9.4f, 9.4f);
+            float randomX = Random.Range(-8.0f, 9.0f);
             transform.position = new Vector3(randomX, 6.9f, 0);
         }
     }
@@ -38,7 +47,10 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
-        {          
+        {
+            GameObject clone = Instantiate(ExplodingEnemy, other.transform.position, Quaternion.identity);
+            Destroy(clone, 1.47f);
+            _Camera.TriggerShake();
             other.GetComponent<Player>().Damage();
             Destroy(gameObject);
             _player.AddScore();

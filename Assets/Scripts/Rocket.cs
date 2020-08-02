@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] private GameObject _explodingEnemy;
     [SerializeField] private float _rSpeed = 3f;
     [SerializeField] private GameObject ExplodingRocket;
 
@@ -38,6 +39,8 @@ public class Rocket : MonoBehaviour
         {
             //destroys the rocket object on collision withthe enemy and starts its animation
             //the object "ExplodingRocket" with the animation mentioned has a child game object with a colliding radius to kill multiple enemies
+            GameObject deadEnemyAnim = Instantiate(_explodingEnemy, collision.transform.position, Quaternion.identity);
+            Destroy(deadEnemyAnim, 1.47f);
             _player.AddScore();
             GameObject clone = Instantiate(ExplodingRocket, transform.position, Quaternion.identity);          
             Destroy(collision.gameObject);

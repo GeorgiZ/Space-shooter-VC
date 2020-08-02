@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e07482107d579468db66188bb078f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explodingEnemy: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
+    type: 3}
   _rSpeed: 8
   ExplodingRocket: {fileID: 4992374552086238144, guid: ed93f37ce2279d844bb04a081fb6065f,
     type: 3}

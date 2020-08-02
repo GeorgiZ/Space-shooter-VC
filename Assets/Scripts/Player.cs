@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject RightWingFire;
     [SerializeField] private AudioClip _laser;
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private GameObject ExplodingEnamy;
     [SerializeField] private GameObject shield;
     [SerializeField] private GameObject Rocket;
     [SerializeField] private CameraShake _Camera;
@@ -305,14 +304,8 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy")
-        {
-            GameObject clone = Instantiate(ExplodingEnamy, collision.transform.position, Quaternion.identity);
-            Destroy(clone, 1.47f);
-            _Camera.TriggerShake();
-
-        }
-        else if (collision.tag == "Elaser")
+ 
+        if (collision.tag == "Elaser")
         {
             Damage();
             _Camera.TriggerShake();

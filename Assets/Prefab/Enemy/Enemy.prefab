@@ -98,7 +98,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 05a7a8353f86ef845b0e74053779aa32, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -116,10 +116,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc4c102b8f6f8b45b6aea8f184ae9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExplodingEnemy: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
+    type: 3}
   _enemySpeed: 2
   EnemyLaser: {fileID: 5852036702755700837, guid: 20d256338c8fb6841b463edcd71aed4c,
     type: 3}
-  damage: 10
+  _Camera: {fileID: 0}
+  _amplitude: 0.01
+  _frequency: 2
 --- !u!61 &-3775940641168064174
 BoxCollider2D:
   m_ObjectHideFlags: 0
