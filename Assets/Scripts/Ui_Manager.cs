@@ -39,7 +39,7 @@ public class Ui_Manager : MonoBehaviour
 
     public void UpdateAmmo(int ammo)
     {
-        _ammoCount.text = "Ammo : " + ammo;
+        _ammoCount.text = "Ammo : " + ammo + " /15";
         if (ammo == 0)
         {
             BlinkingAmmunition.SetBool("Blink", true);
