@@ -1,26 +1,68 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] Powerup;
     [SerializeField] private GameObject[] RarePowerup;
-
+    [SerializeField] private int enemyCount;
+    [SerializeField] private GameObject _waves;
+    [SerializeField]
+    private int _score;
+    private Player player;
+    private Text waveText;
     public GameObject Enemy;
     private bool _stopSpawning = false;
 
-    IEnumerator SpawningEnemies()
+    private void Start()
+    {       
+        waveText = _waves.GetComponent<Text>();        
+    }
+
+    private void Update()
     {
-        yield return new WaitForSeconds(3.0f);
+        _score = player._score;
+    }
+
+    IEnumerator SpawningEnemies()
+    {        
+        yield return new WaitForSeconds(1.0f);
+        waveText.text = "Wave 1";
+        _waves.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        _waves.SetActive(false);
+
         while (_stopSpawning == false)
-        {
+        {     
             float randomX = Random.Range(-8.6f, 9.0f);
             Vector3 random = new Vector3(randomX, 5.9f, 0);
             GameObject newEnemy = Instantiate(Enemy, random, Quaternion.identity);
-            //newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(5.0f);
-        }
+            enemyCount += 1;
+            yield return new WaitForSeconds(2.0f);
+            if (enemyCount == 10)
+            {
+                yield return new WaitForSeconds(5);
+                waveText.text = "Wave 2";
+                _waves.SetActive(true);
+                yield return new WaitForSeconds(3.0f);
+                _waves.SetActive(false);
+            }
+            if (enemyCount == 30)
+            {
+                yield return new WaitForSeconds(5);
+                waveText.text = "Wave 3";
+                _waves.SetActive(true);
+                yield return new WaitForSeconds(3.0f);
+                _waves.SetActive(false);
+            }
+            if (enemyCount == 60)
+            {
+                _stopSpawning = true;
+            }
+            
+        }    
     }
 
     IEnumerator SpawnPowerup()

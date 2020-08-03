@@ -942,6 +942,9 @@ MonoBehaviour:
   - {fileID: 3659520718411003679, guid: a557eb39935edea45a57dd8c9d488291, type: 3}
   RarePowerup:
   - {fileID: 2718455361893193383, guid: da932a30f616aa74f85c45886200e9a9, type: 3}
+  enemyCount: 0
+  _waves: {fileID: 6793682757250310310}
+  _score: 0
   Enemy: {fileID: 4420025441711024717, guid: fec8f0a1e1bc86745ba5614e720fc008, type: 3}
 --- !u!4 &1413562816
 Transform:
@@ -1290,6 +1293,11 @@ PrefabInstance:
       propertyPath: Thruster
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6793682758203485444, guid: d8216c77c47bdf244a3ec2d82d2c3e77,
+        type: 3}
+      propertyPath: Waves
+      value: 
+      objectReference: {fileID: 6793682757250310310}
     - target: {fileID: 6793682758203485445, guid: d8216c77c47bdf244a3ec2d82d2c3e77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1400,8 +1408,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8045830991838584092, guid: d8216c77c47bdf244a3ec2d82d2c3e77,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8216c77c47bdf244a3ec2d82d2c3e77, type: 3}
+--- !u!1 &6793682757250310310 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8045830991838584092, guid: d8216c77c47bdf244a3ec2d82d2c3e77,
+    type: 3}
+  m_PrefabInstance: {fileID: 6793682757250310309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8827203096873665307
 PrefabInstance:
   m_ObjectHideFlags: 0
