@@ -10,6 +10,7 @@ public class Powerups : MonoBehaviour
 
     BoxCollider2D PowerupCollider;
     public Renderer turnoffrender;
+    Player player;
     Vector3 powerupDirection = new Vector3(0, -1, 0);
 
     private void Start()
@@ -17,6 +18,7 @@ public class Powerups : MonoBehaviour
         soundsource = GetComponent<AudioSource>();
         turnoffrender = GetComponent<Renderer>();
         PowerupCollider = gameObject.GetComponent<BoxCollider2D>();
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     void Update()
@@ -41,16 +43,16 @@ public class Powerups : MonoBehaviour
             switch(PowerupID)
             {
                 case 0:
-                    collision.GetComponent<Player>().TripleShotActive();
+                    player.TripleShotActive();
                     PowerupCollider.enabled = false;
                     break;
                 case 1:
-                    collision.GetComponent<Player>().SpeedActive();
+                    player.SpeedActive();
                     PowerupCollider.enabled = false;
                     break;
                 case 2:
-                    collision.GetComponent<Player>().setShield(); //set shield charges to 3
-                    collision.GetComponent<Player>().ShieldActive();
+                    player.setShield(); //set shield charges to 3
+                    player.ShieldActive();
                     PowerupCollider.enabled = false;
                     break;
                 case 3:
@@ -60,9 +62,13 @@ public class Powerups : MonoBehaviour
                     PowerupCollider.enabled = false;
                     break;
                 case 5:
-                    collision.GetComponent<Player>().RocketsActive();
+                    player.RocketsActive();
                     PowerupCollider.enabled = false;
-                    break;              
+                    break;
+                case 6:
+                    player.DebuffActive();
+                    PowerupCollider.enabled = false;
+                    break;
             }
             
             //the sound needs to finish playing

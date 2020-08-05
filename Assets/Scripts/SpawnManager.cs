@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
+    [SerializeField] private GameObject Debuff;
     [SerializeField] private GameObject[] Powerup;
     [SerializeField] private GameObject[] RarePowerup;
     [SerializeField] private int enemyCount;
@@ -36,11 +37,11 @@ public class SpawnManager : MonoBehaviour
 
         while (_stopSpawning == false)
         {     
-            float randomX = Random.Range(-8.6f, 9.0f);
+            float randomX = Random.Range(-7.0f, 9.0f);
             Vector3 random = new Vector3(randomX, 5.9f, 0);
             GameObject newEnemy = Instantiate(Enemy, random, Quaternion.identity);
             enemyCount += 1;
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(5.0f);
             if (enemyCount == 10)
             {
                 yield return new WaitForSeconds(5);
@@ -94,6 +95,19 @@ public class SpawnManager : MonoBehaviour
         
     }
 
+    IEnumerator SpawnDebuff()
+    {
+        while(_stopSpawning == false)
+        {
+            yield return new WaitForSeconds(5.0f);
+            float randomX = Random.Range(-9.4f, 9.4f);
+            Vector3 random = new Vector3(randomX, 6.9f, 0f);
+            Instantiate(Debuff, random, Quaternion.identity);
+            yield return new WaitForSeconds(5.0f);
+        }
+        
+    }
+
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
@@ -101,6 +115,7 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawning()
     {
+        StartCoroutine(SpawnDebuff());
         StartCoroutine(SpawningEnemies());
         StartCoroutine(SpawnPowerup());
         StartCoroutine(SpawnRarePowerup());

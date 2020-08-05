@@ -50,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -122,7 +123,7 @@ MonoBehaviour:
   EnemyLaser: {fileID: 5852036702755700837, guid: 20d256338c8fb6841b463edcd71aed4c,
     type: 3}
   _Camera: {fileID: 0}
-  _amplitude: 0.01
+  _amplitude: 0.002
   _frequency: 2
 --- !u!61 &-3775940641168064174
 BoxCollider2D:

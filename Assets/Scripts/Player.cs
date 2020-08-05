@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isRocketActive = false;
     [SerializeField] private bool _isTripleShotActive = false;
     [SerializeField] private bool _isSpeedActive = false;
+    [SerializeField] private bool _isDebuffActive = false;
     [SerializeField] private bool _isShieldActive = false;
     [SerializeField] private float _fireRate = 0.5f;
     [SerializeField] public int _score;
@@ -86,10 +87,19 @@ public class Player : MonoBehaviour
         {
             _speed = 15.0f;
         }
-        else if (_isSpeedActive == false)
+        else
         {
             _speed = 10.0f;
         }
+
+        if (_isDebuffActive == true)
+        {
+            _speed = 5.0f;
+        }
+     /*  else
+        {
+            _speed = 10.0f;
+        }*/
     }
 
     private void Thrust()
@@ -260,6 +270,19 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isSpeedActive = false;
+    }
+
+    public void DebuffActive()
+    {
+        _isDebuffActive = true;
+
+        StartCoroutine(DebuffPowerDownRoutine());
+    }
+
+    IEnumerator DebuffPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isDebuffActive = false;
     }
 
     public void ShieldActive()
