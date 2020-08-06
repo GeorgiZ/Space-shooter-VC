@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            GameObject clone = Instantiate(ExplodingEnemy, other.transform.position, Quaternion.identity);
+            GameObject clone = Instantiate(ExplodingEnemy, transform.position, Quaternion.identity);
             Destroy(clone, 1.47f);
             _Camera.TriggerShake();
             other.GetComponent<Player>().Damage();

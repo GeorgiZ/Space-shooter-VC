@@ -47,6 +47,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -114,6 +115,7 @@ GameObject:
   - component: {fileID: -3192186921509188350}
   - component: {fileID: 330379792}
   - component: {fileID: 658188891}
+  - component: {fileID: 1918426790}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -153,23 +155,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lives: 3
   _speed: 10
-  _isRocketActive: 1
-  isTripleShotActive: 0
-  isSpeedActive: 0
-  isShieldActive: 0
+  _isRocketActive: 0
+  _isTripleShotActive: 0
+  _isSpeedActive: 0
+  _isDebuffActive: 0
+  _isShieldActive: 0
+  _fireRate: 0.15
+  _score: 0
+  _shieldCharges: 0
   TripleShot: {fileID: 5337216368880419482, guid: 9f39a6596fc97e244938a5501e12fb99,
     type: 3}
-  _fireRate: 0.15
-  score: 0
   LeftWingFire: {fileID: 1880907885582985974}
   RightWingFire: {fileID: 9134727170851211646}
   _laser: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _audioSource: {fileID: 658188891}
-  ExplodingEnamy: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
-    type: 3}
   shield: {fileID: 1464513227046764798}
-  shieldCharges: 0
-  Rocket: {fileID: 0}
+  Rocket: {fileID: 1150094388107677940, guid: 7f701fea98abedd44a7effa4db34be5f, type: 3}
+  _Camera: {fileID: 0}
   laser: {fileID: 1520708806000152999, guid: 2a72f9414655a514abe46026fdaa3e9d, type: 3}
 --- !u!61 &-3192186921509188350
 BoxCollider2D:
@@ -212,6 +214,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -267,7 +270,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 3.774479
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -343,6 +346,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1918426790
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3875709140046264112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 22066fb95b3a5154ba9be9e1e773dac1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4790277629055942416
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,6 +412,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -491,6 +514,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

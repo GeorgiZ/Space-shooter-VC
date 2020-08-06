@@ -10,9 +10,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject[] RarePowerup;
     [SerializeField] private int enemyCount;
     [SerializeField] private GameObject _waves;
-    [SerializeField]
-    private int _score;
-    private Player player;
+    [SerializeField] private GameObject _mine;
     private Text waveText;
     public GameObject Enemy;
     private bool _stopSpawning = false;
@@ -22,40 +20,42 @@ public class SpawnManager : MonoBehaviour
         waveText = _waves.GetComponent<Text>();        
     }
 
-    private void Update()
-    {
-        _score = player._score;
-    }
-
     IEnumerator SpawningEnemies()
     {        
         yield return new WaitForSeconds(1.0f);
         waveText.text = "Wave 1";
         _waves.SetActive(true);
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         _waves.SetActive(false);
 
         while (_stopSpawning == false)
-        {     
+        {
+            //Spawn position for mines
+            float mineRandomX = Random.Range(-4.0f, 4.0f);
+            Vector3 mineRandom = new Vector3(mineRandomX, 5.9f, 0);
+            //Position for normal enemies
             float randomX = Random.Range(-7.0f, 9.0f);
             Vector3 random = new Vector3(randomX, 5.9f, 0);
-            GameObject newEnemy = Instantiate(Enemy, random, Quaternion.identity);
+            yield return new WaitForSeconds(2.0f);
+            Instantiate(Enemy, random, Quaternion.identity);
             enemyCount += 1;
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(2.0f);
+            Instantiate(_mine, mineRandom, Quaternion.identity);
+            enemyCount += 1;
             if (enemyCount == 10)
             {
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(1.0f);
                 waveText.text = "Wave 2";
                 _waves.SetActive(true);
-                yield return new WaitForSeconds(3.0f);
+                yield return new WaitForSeconds(2.0f);
                 _waves.SetActive(false);
             }
             if (enemyCount == 30)
             {
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(1.0f);
                 waveText.text = "Wave 3";
                 _waves.SetActive(true);
-                yield return new WaitForSeconds(3.0f);
+                yield return new WaitForSeconds(2.0f);
                 _waves.SetActive(false);
             }
             if (enemyCount == 60)

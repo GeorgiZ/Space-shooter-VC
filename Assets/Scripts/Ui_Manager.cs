@@ -12,7 +12,8 @@ public class Ui_Manager : MonoBehaviour
     [SerializeField] private GameObject Restart_Game_Text;
     [SerializeField] private Text _ammoCount;
     [SerializeField] private Transform bar;
-
+    [SerializeField] private GameObject _explosion;
+    
     private Animator BlinkingAmmunition;
     public float _barX = 1;
     private float maxBar = 1f;
@@ -73,6 +74,7 @@ public class Ui_Manager : MonoBehaviour
         if (currentLives <= 0)
         {
             StartCoroutine(GmaeOverBehaviour());
+            Instantiate(_explosion, ThePlayer.transform.position, Quaternion.identity);
         }
     }
 

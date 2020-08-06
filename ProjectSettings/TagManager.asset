@@ -16,6 +16,10 @@ TagManager:
   - rocket
   - RocketPowerup
   - ExplosionRadius
+  - Debuff
+  - Mine
+  - MineExplosionRadius
+  - MineTriggerRadius
   layers:
   - Default
   - TransparentFX

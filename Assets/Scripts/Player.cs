@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         _uiManager.ChangeLives(_lives);
         _ammunition = Mathf.Clamp(_ammunition, 0, 15);
     }
-
+    
     public void Movement()
     {      
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -96,10 +96,6 @@ public class Player : MonoBehaviour
         {
             _speed = 5.0f;
         }
-     /*  else
-        {
-            _speed = 10.0f;
-        }*/
     }
 
     private void Thrust()
@@ -332,6 +328,7 @@ public class Player : MonoBehaviour
         {
             Damage();
             _Camera.TriggerShake();
+            Destroy(collision.gameObject);
         }
         else if(collision.tag == "ammo")
         {

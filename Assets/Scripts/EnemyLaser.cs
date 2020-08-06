@@ -14,11 +14,14 @@ public class EnemyLaser : MonoBehaviour
     private void LaserBehaviour()
     {
         transform.Translate(Vector3.down * laserSpeed * Time.deltaTime);
-        if(transform.position.y < -6f)
+        if(transform.position.y <= -6.0f)
         {
-            Destroy(this.gameObject);
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            Destroy(gameObject);
         }     
     }
-
 
 }

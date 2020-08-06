@@ -1,21 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
     [SerializeField] private float laserSpeed;
     [SerializeField] private GameObject ExplodingEnemy;
+    [SerializeField] private GameObject ExplodingMine;
 
     void Update()
     {
-        LaserBehaviour();       
+        LaserBehaviour();
     }
 
     public void LaserBehaviour()
     {
         transform.Translate(Vector3.up * laserSpeed * Time.deltaTime);
-        if (gameObject.transform.position.y >= 6.9f)
+        if (gameObject.transform.position.y >= 6.9f || transform.position.y <= -6.0f)
         {
             if (transform.parent != null)
             {
@@ -29,7 +31,7 @@ public class Laser : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            GameObject clone  = Instantiate(ExplodingEnemy, collision.transform.position, Quaternion.identity);
+            GameObject clone = Instantiate(ExplodingEnemy, collision.transform.position, Quaternion.identity);
             Destroy(clone, 1.47f);
         }
     }
