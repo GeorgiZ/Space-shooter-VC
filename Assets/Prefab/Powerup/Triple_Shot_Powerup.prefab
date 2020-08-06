@@ -51,6 +51,7 @@ MonoBehaviour:
   speed: 3
   PowerupID: 0
   soundsource: {fileID: 7560959653643802473}
+  turnoffrender: {fileID: 0}
 --- !u!212 &451350597145084564
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66,6 +67,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = _laser;
-        _ammunition = 15;
+        _ammunition = 30;
     }
 
     void Update()
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         shieldcolour();
         PlayerOnFire();
         _uiManager.ChangeLives(_lives);
-        _ammunition = Mathf.Clamp(_ammunition, 0, 15);
+       _ammunition = Mathf.Clamp(_ammunition, 0, 30);
     }
     
     public void Movement()
@@ -332,11 +332,11 @@ public class Player : MonoBehaviour
         }
         else if(collision.tag == "ammo")
         {
-            _ammunition += 10;
+            _ammunition += 15;
         }
         else if(collision.tag == "heal")
         {
-            _lives += 1;
+            _lives += 2;
         }
 
     }
