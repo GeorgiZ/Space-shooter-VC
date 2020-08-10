@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -10,8 +13,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private CameraShake _Camera;
     [SerializeField] private float _amplitude;
     [SerializeField] private float _frequency;
+    [SerializeField] GameObject Shield;
 
-    Vector3 enemyPosition;
     private Player _player;
     private Ui_Manager _uiManager;
     private float _FireSpeed;
@@ -22,42 +25,55 @@ public class Enemy : MonoBehaviour
         _Camera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _uiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
-        enemyPosition = transform.position;
     }
 
     void Update()
-    { 
+    {;
         EnemyBehaviour();
         EnemyShoot();
-        enemyPosition = transform.position;
     }
 
     private void EnemyBehaviour()
     {
-        enemyPosition -= transform.up * Time.deltaTime * _enemySpeed;
-        transform.position = enemyPosition - transform.right * Mathf.Sin(Time.time * _frequency) * _amplitude; //side movement
+        transform.Translate((Vector3.down) * Time.deltaTime * _enemySpeed);
+        //enemyPosition -= transform.up * Time.deltaTime * _enemySpeed;
+        transform.Translate((Vector3.right) * Mathf.Sin(Time.time * _frequency) * _amplitude); //side movement
 
         if (transform.position.y <= -5.35f)
         {
             float randomX = Random.Range(-8.0f, 9.0f);
-            transform.position = new Vector3(randomX, 6.9f, 0);
+            transform.position = new Vector3(randomX, 6.8f, 0);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
         if (other.tag == "Player")
         {
+            other.GetComponent<Player>().Damage();
+            _Camera.TriggerShake();
+            if (Shield.activeSelf == true) //Removes the shield if it is active and protects the enemy for one hit
+            {
+                Shield.SetActive(false);
+                return;
+            }
             GameObject clone = Instantiate(ExplodingEnemy, transform.position, Quaternion.identity);
             Destroy(clone, 1.47f);
-            _Camera.TriggerShake();
-            other.GetComponent<Player>().Damage();
             Destroy(gameObject);
             _player.AddScore();
         }
         else if (other.tag == "Laser")
         {
             Destroy(other.gameObject);
+            if (Shield.activeSelf == true) //Removes the shield if it is active and protects the enemy for one hit
+            {
+                Shield.SetActive(false);
+                return;
+            }
+            // RemoveShield();
+            GameObject clone = Instantiate(ExplodingEnemy, gameObject.transform.position, Quaternion.identity);
+            Destroy(clone, 1.47f);
             if(_player != null)
             {
                 _player.AddScore();
@@ -66,6 +82,11 @@ public class Enemy : MonoBehaviour
         }
         else if(other.tag == "ExplosionRadius")
         {
+            if (Shield.activeSelf == true) //Removes the shield if it is active and protects the enemy for one hit
+            {
+                Shield.SetActive(false);
+                return;
+            }
             _player._score += 10;
             _uiManager.UpdateScore(_player._score);
             

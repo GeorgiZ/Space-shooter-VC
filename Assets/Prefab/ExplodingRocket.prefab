@@ -62,6 +62,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explodingEnemy: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
     type: 3}
+  MineExplosion: {fileID: 4250674747384553461, guid: 5081d790c8bfd4341aa4e81b7d06ccec,
+    type: 3}
 --- !u!1 &4992374552086238144
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +131,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

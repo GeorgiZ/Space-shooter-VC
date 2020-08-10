@@ -48,6 +48,7 @@ public class MineProjectile : MonoBehaviour
 			_spriteRenderer.enabled = false;
 			_thisCollider.enabled = false; // so the player wont get get hit while the sound finishes
 			Destroy(gameObject, 1.0f);
+			
         }
     }
 

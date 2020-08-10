@@ -10,7 +10,10 @@ public class Mine : MonoBehaviour
     [SerializeField] private CameraShake _Camera;
     [SerializeField] private int _speed;
     [SerializeField] GameObject Projectile;
+    [SerializeField] GameObject ExplodingRocket;
+    [SerializeField] GameObject MineShield;
 
+    private GameObject clone;
     private Player _player;
     private float _canShoot = -1.0f;
     private float _fireSpeed;
@@ -23,13 +26,11 @@ public class Mine : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();
         xRandom = Random.Range(-1, 1);
 
-        // Update is called once per frame
     }
     void Update()
     {
         MineBehaviour();
         MineAttack();
- 
     }
 
     private void MineBehaviour()
@@ -67,33 +68,48 @@ public class Mine : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
-        {            
-            GameObject clone = Instantiate(MineExplosion, transform.position, Quaternion.identity);
-            Destroy(gameObject);
-            Destroy(clone, 1.0f);
-            collision.GetComponent<Player>().Damage();
-            _player.AddScore();
+        {
             _Camera.TriggerShake();
+            collision.GetComponent<Player>().Damage();
+
+            if(MineShield.activeSelf == true)//Removes the shield if it is active and protects the enemy for one hit
+            {
+                MineShield.SetActive(false);
+                return;
+            }
+            clone = Instantiate(MineExplosion, transform.position, Quaternion.identity);
+            DestroyObjectsAddScore();
+            
         }
         
         if(collision.tag == "Laser" )
         {
-            
-            GameObject clone = Instantiate(MineExplosion, transform.position, Quaternion.identity);
-            Destroy(gameObject);
-            Destroy(clone, 1.0f);
             Destroy(collision.gameObject);
-            _player.AddScore();
 
+            if (MineShield.activeSelf == true)
+            {
+                MineShield.SetActive(false);
+                return;
+            }
+            clone = Instantiate(MineExplosion, transform.position, Quaternion.identity);
+            DestroyObjectsAddScore();
         }
         
         if (collision.tag == "rocket")
         {
-            GameObject clone = Instantiate(MineExplosion, transform.position, Quaternion.identity);
-            Destroy(gameObject);
-            Destroy(clone, 1.0f);
+            clone = Instantiate(MineExplosion, transform.position, Quaternion.identity);
+            GameObject rocketExplosion =  Instantiate(ExplodingRocket, collision.transform.position, Quaternion.identity);
+            Destroy(rocketExplosion, 1.47f);
+            DestroyObjectsAddScore();
             Destroy(collision.gameObject);
-            _player.AddScore();
         }
+    }
+
+    private void DestroyObjectsAddScore()
+    {
+     
+        Destroy(gameObject);
+        Destroy(clone, 1.0f);
+        _player.AddScore();
     }
 }

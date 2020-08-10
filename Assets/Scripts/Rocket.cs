@@ -37,7 +37,7 @@ public class Rocket : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            //destroys the rocket object on collision withthe enemy and starts its animation
+            //destroys the rocket object on collision with the enemy and starts its animation
             //the object "ExplodingRocket" with the animation mentioned has a child game object with a colliding radius to kill multiple enemies
             GameObject deadEnemyAnim = Instantiate(_explodingEnemy, collision.transform.position, Quaternion.identity);
             Destroy(deadEnemyAnim, 1.47f);
