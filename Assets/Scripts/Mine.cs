@@ -7,7 +7,6 @@ using UnityEngine;
 public class Mine : MonoBehaviour
 {
     [SerializeField] GameObject MineExplosion;
-    [SerializeField] private CameraShake _Camera;
     [SerializeField] private int _speed;
     [SerializeField] GameObject Projectile;
     [SerializeField] GameObject ExplodingRocket;
@@ -22,7 +21,6 @@ public class Mine : MonoBehaviour
 
     void Start()
     {
-        _Camera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         xRandom = Random.Range(-1, 1);
 
@@ -69,7 +67,6 @@ public class Mine : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            _Camera.TriggerShake();
             collision.GetComponent<Player>().Damage();
 
             if(MineShield.activeSelf == true)//Removes the shield if it is active and protects the enemy for one hit

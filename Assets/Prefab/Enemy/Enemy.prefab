@@ -123,7 +123,6 @@ MonoBehaviour:
   _enemySpeed: 2
   EnemyLaser: {fileID: 5852036702755700837, guid: 20d256338c8fb6841b463edcd71aed4c,
     type: 3}
-  _Camera: {fileID: 0}
   _amplitude: 0.002
   _frequency: 2
   Shield: {fileID: 6808516954736467508}

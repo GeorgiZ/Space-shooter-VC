@@ -182,7 +182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MineExplosion: {fileID: 4250674747384553461, guid: 5081d790c8bfd4341aa4e81b7d06ccec,
     type: 3}
-  _Camera: {fileID: 0}
   _speed: 2
   Projectile: {fileID: 5076030429899034011, guid: 001cbe7400b4add4fbcd45a6e4a69233,
     type: 3}

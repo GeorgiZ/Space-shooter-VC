@@ -42,7 +42,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.006145239, y: 0}
@@ -63,6 +63,8 @@ MonoBehaviour:
   _explodingEnemy: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
     type: 3}
   MineExplosion: {fileID: 4250674747384553461, guid: 5081d790c8bfd4341aa4e81b7d06ccec,
+    type: 3}
+  AggressiveExplosion: {fileID: 1473295320673966220, guid: fe0a0cd2eca309d4cbe07a566202fcbb,
     type: 3}
 --- !u!1 &4992374552086238144
 GameObject:

@@ -7,14 +7,14 @@ public class CameraShake : MonoBehaviour
     [SerializeField] private float shakeDuration = 0f;
     [SerializeField] private float shakeMagnitude = 1.0f;
     [SerializeField] private float dampingSpeed = 1.0f;
-    private Transform transform;
+    private Transform transformm;
     Vector3 initialPosition;
 
     private void Awake()
     {
         if (transform == null)
         {
-            transform = GetComponent<Transform>();
+            transformm = GetComponent<Transform>();
         }
     }
 

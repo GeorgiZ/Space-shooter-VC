@@ -7,7 +7,6 @@ public class MineProjectile : MonoBehaviour
 {
 
 	[SerializeField] public float speed = 2;
-	[SerializeField] private CameraShake _Camera;
 
 	private SpriteRenderer _spriteRenderer;
 	private CircleCollider2D _thisCollider;
@@ -18,7 +17,6 @@ public class MineProjectile : MonoBehaviour
 
 	void Start()
 	{
-		_Camera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
 		target = GameObject.FindGameObjectWithTag("Player");
 		rb = GetComponent<Rigidbody2D>();
 		StartCoroutine(MineProjectileLifespan());
@@ -43,7 +41,6 @@ public class MineProjectile : MonoBehaviour
         if (collision.tag == "Player")
         {
 			collision.GetComponent<Player>().Damage();
-			_Camera.TriggerShake();
 			_explosion.Play();
 			_spriteRenderer.enabled = false;
 			_thisCollider.enabled = false; // so the player wont get get hit while the sound finishes

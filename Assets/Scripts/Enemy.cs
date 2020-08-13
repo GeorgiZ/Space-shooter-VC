@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject ExplodingEnemy;
     [SerializeField] private int _enemySpeed = 10;
     [SerializeField] private GameObject EnemyLaser;
-    [SerializeField] private CameraShake _Camera;
     [SerializeField] private float _amplitude;
     [SerializeField] private float _frequency;
     [SerializeField] GameObject Shield;
@@ -22,7 +21,6 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        _Camera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _uiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
     }
@@ -51,8 +49,7 @@ public class Enemy : MonoBehaviour
         
         if (other.tag == "Player")
         {
-            other.GetComponent<Player>().Damage();
-            _Camera.TriggerShake();
+            _player.Damage();
             if (Shield.activeSelf == true) //Removes the shield if it is active and protects the enemy for one hit
             {
                 Shield.SetActive(false);
@@ -87,6 +84,7 @@ public class Enemy : MonoBehaviour
                 Shield.SetActive(false);
                 return;
             }
+            //adds 10 points to the score for each enemy hit and upfates it
             _player._score += 10;
             _uiManager.UpdateScore(_player._score);
             

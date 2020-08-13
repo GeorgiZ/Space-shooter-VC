@@ -20,6 +20,8 @@ TagManager:
   - Mine
   - MineExplosionRadius
   - MineTriggerRadius
+  - EnemyShield
+  - Aggressive
   layers:
   - Default
   - TransparentFX

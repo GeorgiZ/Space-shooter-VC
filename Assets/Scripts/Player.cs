@@ -162,7 +162,8 @@ public class Player : MonoBehaviour
         _lives -= _dmgAmaunt;
         _shieldCharges -= 1;
         _uiManager.ChangeLives(_lives);
-       
+        _Camera.TriggerShake();
+
         if ( _lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
@@ -327,7 +328,6 @@ public class Player : MonoBehaviour
         if (collision.tag == "Elaser")
         {
             Damage();
-            _Camera.TriggerShake();
             Destroy(collision.gameObject);
         }
         else if(collision.tag == "ammo")

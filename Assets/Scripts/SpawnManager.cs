@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _waves;
     [SerializeField] private GameObject _mine;
     [SerializeField] private GameObject _ammoSpawn;
-    [SerializeField] private GameObject _enemyShield;
+    [SerializeField] private GameObject _agressiveEnemy;
 
     private Text waveText;
     public GameObject Enemy;
@@ -48,6 +48,24 @@ public class SpawnManager : MonoBehaviour
         enemyCount += 1;
     }
 
+    private void SpawnAggressiveEnemy()
+    {
+        //spawns the aggressive enemy on the left or right side
+        int randomX = Random.Range(0, 2);
+        int random = 0;
+        if (randomX == 1)
+        {
+            random = -11;
+        }
+        else if(randomX == 0)
+        {
+            random = 11;
+        }
+        Vector3 randomPosition = new Vector3(random, 3.0f, 0.0f);
+
+        Instantiate(_agressiveEnemy, randomPosition, Quaternion.identity);
+        
+    }
     private void ShieldedEnemyChance(GameObject enemy)
     {
         //25% chance that the enemy will have a shield
@@ -100,12 +118,21 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(2.0f);
                 _waves.SetActive(false);
             }
-            if (enemyCount ==45)
+            if (enemyCount == 45)
             {
                 _stopSpawning = true;
             }
             
         }    
+    }
+
+    IEnumerator SpawningAggressiveEnemy()
+    {
+        while(_stopSpawning == false)
+        {
+            yield return new WaitForSeconds(17.0f);
+            SpawnAggressiveEnemy();
+        }
     }
 
     IEnumerator SpawnAmmo()
@@ -192,5 +219,6 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnRarePowerup());
         StartCoroutine(SpawnMediumPowerup());
         StartCoroutine(SpawnAmmo());
+        StartCoroutine(SpawningAggressiveEnemy());
     }
 }
