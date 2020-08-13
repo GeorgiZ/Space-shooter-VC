@@ -75,5 +75,10 @@ public class Powerups : MonoBehaviour
             turnoffrender.enabled = false;
             Destroy(gameObject, 0.8f);           
         }
+        else if(collision.tag =="SingleLaser" || collision.tag== "Elaser")
+        {
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
+        }
     }
 }

@@ -30,6 +30,7 @@ public class AggressiveEnemy : MonoBehaviour
 
     private void AggressiveEnemyBehaviour()
     {
+        //sets the condition if the enemy should move left or right
         if (_currentPosition >= 11.0f)
         {
             _turnPoint = 1;
@@ -39,6 +40,7 @@ public class AggressiveEnemy : MonoBehaviour
             _turnPoint = 0;
         }
 
+        //if the enemy reached the left point it will move right and if the right point it will move left
         if(_turnPoint == 1)
         {
             transform.Translate((Vector3.left) * Time.deltaTime * _speed);

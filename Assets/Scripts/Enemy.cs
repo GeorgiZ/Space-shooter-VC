@@ -60,6 +60,10 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
             _player.AddScore();
         }
+        else if(other.tag == "Powerup")
+        {
+            Instantiate(EnemyLaser, transform.position, Quaternion.identity);
+        }
         else if (other.tag == "Laser")
         {
             Destroy(other.gameObject);

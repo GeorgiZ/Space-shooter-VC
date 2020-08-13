@@ -22,6 +22,8 @@ TagManager:
   - MineTriggerRadius
   - EnemyShield
   - Aggressive
+  - Powerup
+  - SingleLaser
   layers:
   - Default
   - TransparentFX
