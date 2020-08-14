@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Powerups : MonoBehaviour
 {
-    [SerializeField] private int speed = 3;
+    [SerializeField] private int speed = 1;
     [SerializeField] private int PowerupID;
     [SerializeField] private AudioSource soundsource;
 

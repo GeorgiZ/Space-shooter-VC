@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shield;
     [SerializeField] private GameObject Rocket;
     [SerializeField] private CameraShake _Camera;
+    [SerializeField] private GameObject EnemyExplosion;
 
     private SpawnManager _spawnManager;
     public GameObject laser;
@@ -337,6 +338,13 @@ public class Player : MonoBehaviour
         else if(collision.tag == "heal")
         {
             _lives += 2;
+        }
+        else if(collision.tag == "TEnemy")
+        {
+            Damage();
+            Destroy(collision.gameObject);
+            GameObject clone = Instantiate(EnemyExplosion, collision.transform.position, Quaternion.identity);
+            Destroy(clone, 1.47f);
         }
 
     }

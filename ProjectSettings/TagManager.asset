@@ -24,6 +24,7 @@ TagManager:
   - Aggressive
   - Powerup
   - SingleLaser
+  - TEnemy
   layers:
   - Default
   - TransparentFX

@@ -13,6 +13,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _mine;
     [SerializeField] private GameObject _ammoSpawn;
     [SerializeField] private GameObject _agressiveEnemy;
+    [SerializeField] private GameObject _teleportingEnemy;
+    [SerializeField] private GameObject _teleportLight;
 
     private Text waveText;
     public GameObject Enemy;
@@ -66,6 +68,17 @@ public class SpawnManager : MonoBehaviour
         Instantiate(_agressiveEnemy, randomPosition, Quaternion.identity);
         
     }
+
+    private void SpawnTeleportEnemy()
+    {
+        float _randomX = Random.Range(-8.8f, 8.8f);
+        float _randomY = Random.Range(-4.5f, 4.5f);
+        Vector3 _random = new Vector3(_randomX, _randomY, 0);
+        GameObject enemy = Instantiate(_teleportingEnemy, _random, Quaternion.identity);
+        GameObject light = Instantiate(_teleportLight, enemy.transform.position, Quaternion.identity); 
+        Destroy(light, 0.57f);
+    }
+
     private void ShieldedEnemyChance(GameObject enemy)
     {
         //25% chance that the enemy will have a shield
@@ -124,6 +137,16 @@ public class SpawnManager : MonoBehaviour
             }
             
         }    
+    }
+
+    IEnumerator SpawningTeleportingEnemy()
+    {
+        while (_stopSpawning == false)
+        {
+            yield return new WaitForSeconds(40.0f);
+            SpawnTeleportEnemy();
+        }
+        
     }
 
     IEnumerator SpawningAggressiveEnemy()
@@ -220,5 +243,6 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnMediumPowerup());
         StartCoroutine(SpawnAmmo());
         StartCoroutine(SpawningAggressiveEnemy());
+        StartCoroutine(SpawningTeleportingEnemy());
     }
 }

@@ -8,7 +8,6 @@ public class AggressiveEnemy : MonoBehaviour
     [SerializeField] private int _speed;
     [SerializeField] private GameObject AggressiveEnemyExplosion;
     [SerializeField] private GameObject ExplodingRocket;
-    [SerializeField] private GameObject Canvas;
 
     private Ui_Manager UiManager;
     private Player player;
