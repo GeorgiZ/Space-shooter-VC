@@ -28,7 +28,7 @@ public class TeleportingEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Laser")
+        if (collision.tag == "Laser" || collision.tag == "rocket")
         {
             Destroy(collision.gameObject);
             //random coordinates for teleportation

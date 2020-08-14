@@ -247,7 +247,7 @@ PrefabInstance:
     - target: {fileID: 3875709140046264125, guid: ba82e4fe217f6634d9244ace8b3440b7,
         type: 3}
       propertyPath: _isRocketActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3875709140046264125, guid: ba82e4fe217f6634d9244ace8b3440b7,
         type: 3}
@@ -353,6 +353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5719127821266326635, guid: 095d894b76b1b334a97c97d73b8bdc1b,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 095d894b76b1b334a97c97d73b8bdc1b, type: 3}
