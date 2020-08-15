@@ -123,6 +123,8 @@ MonoBehaviour:
   speed: 3
   PowerupID: 5
   soundsource: {fileID: 0}
+  Player: {fileID: 0}
+  _collectSpeed: 10
   turnoffrender: {fileID: 0}
 --- !u!61 &8619372311648065443
 BoxCollider2D:

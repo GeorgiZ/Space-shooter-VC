@@ -21,7 +21,7 @@ public class EnemyMissile : MonoBehaviour
     {
         transform.Translate(Vector3.up * Time.deltaTime * _speed);
 
-        if (gameObject.transform.position.y >= 6.9f)
+        if (gameObject.transform.position.y >= 6.9f || transform.position.y <= -6.0f)
         {
             
             Destroy(gameObject);

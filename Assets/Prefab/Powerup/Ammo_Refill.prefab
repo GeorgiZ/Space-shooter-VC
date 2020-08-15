@@ -102,6 +102,8 @@ MonoBehaviour:
   speed: 3
   PowerupID: 3
   soundsource: {fileID: 7877194949747731088}
+  Player: {fileID: 3875709140046264112, guid: ba82e4fe217f6634d9244ace8b3440b7, type: 3}
+  _collectSpeed: 10
   turnoffrender: {fileID: 0}
 --- !u!82 &7877194949747731088
 AudioSource:

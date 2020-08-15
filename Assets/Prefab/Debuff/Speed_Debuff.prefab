@@ -50,6 +50,8 @@ MonoBehaviour:
   speed: 3
   PowerupID: 6
   soundsource: {fileID: 0}
+  Player: {fileID: 0}
+  _collectSpeed: 3
   turnoffrender: {fileID: 0}
 --- !u!212 &4004109711427387934
 SpriteRenderer:

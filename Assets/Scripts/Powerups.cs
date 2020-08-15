@@ -7,7 +7,8 @@ public class Powerups : MonoBehaviour
     [SerializeField] private int speed = 1;
     [SerializeField] private int PowerupID;
     [SerializeField] private AudioSource soundsource;
-
+    [SerializeField] public GameObject Player;
+    [SerializeField] private float _collectSpeed;
     BoxCollider2D PowerupCollider;
     public Renderer turnoffrender;
     Player player;
@@ -23,7 +24,14 @@ public class Powerups : MonoBehaviour
 
     void Update()
     {
+        //moves all the pickups to the player with the set speed
         PowerupMovement();
+        if(Input.GetKey(KeyCode.C))
+        {
+            float step = _collectSpeed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+           
+        }
     }
 
     private void PowerupMovement()
