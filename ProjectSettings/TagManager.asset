@@ -25,6 +25,8 @@ TagManager:
   - Powerup
   - SingleLaser
   - TEnemy
+  - HomingNuclearMissile
+  - AnyEnemy
   layers:
   - Default
   - TransparentFX

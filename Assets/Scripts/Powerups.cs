@@ -7,10 +7,10 @@ public class Powerups : MonoBehaviour
     [SerializeField] private int speed = 1;
     [SerializeField] private int PowerupID;
     [SerializeField] private AudioSource soundsource;
-    [SerializeField] public GameObject Player;
     [SerializeField] private float _collectSpeed;
+
     BoxCollider2D PowerupCollider;
-    public Renderer turnoffrender;
+    private Renderer turnoffrender;
     Player player;
     Vector3 powerupDirection = new Vector3(0, -1, 0);
 
@@ -75,6 +75,10 @@ public class Powerups : MonoBehaviour
                     break;
                 case 6:
                     player.DebuffActive();
+                    PowerupCollider.enabled = false;
+                    break;
+                case 7:
+                    player.NuclearChargeActive();
                     PowerupCollider.enabled = false;
                     break;
             }

@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Rocket;
     [SerializeField] private CameraShake _Camera;
     [SerializeField] private GameObject EnemyExplosion;
+    [SerializeField] public bool _isNuclearActive = false;
+    [SerializeField] private GameObject NuclearBomb;
 
     private SpawnManager _spawnManager;
     public GameObject laser;
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
         Movement();
         Thrust();
         SpaceToShoot();
+        ShootNuclear();
         DestroyTripleShot();
         Shield();
         SetMaxLives();
@@ -150,6 +153,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void ShootNuclear()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) && _isNuclearActive == true)
+        {
+            Instantiate(NuclearBomb, transform.position, Quaternion.identity);
+            _isNuclearActive = false;
+        }
+    }
+
     public void Damage()
     {
         //when shield is on one charge and player gets hit disable the shield and dont take dmg on that hit
@@ -247,6 +259,12 @@ public class Player : MonoBehaviour
     {
         _isRocketActive = true;
         StartCoroutine(RocketDownRoutine());
+    }
+
+    public void NuclearChargeActive()
+    {
+        _isNuclearActive = true;
+
     }
 
     IEnumerator RocketDownRoutine()

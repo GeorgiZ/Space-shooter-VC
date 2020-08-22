@@ -15,6 +15,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _agressiveEnemy;
     [SerializeField] private GameObject _teleportingEnemy;
     [SerializeField] private GameObject _teleportLight;
+    [SerializeField] private GameObject _homingNuclearPowerup;
 
     private Text waveText;
     public GameObject Enemy;
@@ -66,7 +67,8 @@ public class SpawnManager : MonoBehaviour
         Vector3 randomPosition = new Vector3(random, 3.0f, 0.0f);
 
         Instantiate(_agressiveEnemy, randomPosition, Quaternion.identity);
-        
+        enemyCount += 1;
+
     }
 
     private void SpawnTeleportEnemy()
@@ -77,6 +79,7 @@ public class SpawnManager : MonoBehaviour
         GameObject enemy = Instantiate(_teleportingEnemy, _random, Quaternion.identity);
         GameObject light = Instantiate(_teleportLight, enemy.transform.position, Quaternion.identity); 
         Destroy(light, 0.57f);
+        enemyCount += 1;
     }
 
     private void ShieldedEnemyChance(GameObject enemy)
@@ -122,7 +125,7 @@ public class SpawnManager : MonoBehaviour
 
 
             }
-            if (enemyCount == 30)
+            else if (enemyCount == 30)
             {
                 yield return new WaitForSeconds(1.0f);
                 waveText.text = "Wave 3";
@@ -131,7 +134,7 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(2.0f);
                 _waves.SetActive(false);
             }
-            if (enemyCount == 45)
+             else if (enemyCount == 45)
             {
                 _stopSpawning = true;
             }
@@ -214,6 +217,19 @@ public class SpawnManager : MonoBehaviour
         
     }
 
+    IEnumerator SpawnHomingNuclear()
+    {
+        while (_stopSpawning == false)
+        {
+            yield return new WaitForSeconds(60.0f);
+
+            float randomX = Random.Range(-9.4f, 9.4f);
+            Vector3 random = new Vector3(randomX, 6.9f, 0f);
+
+            Instantiate(_homingNuclearPowerup, random, Quaternion.identity);
+        }
+    }
+
     IEnumerator SpawnDebuff()
     {
         while(_stopSpawning == false)
@@ -244,5 +260,6 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnAmmo());
         StartCoroutine(SpawningAggressiveEnemy());
         StartCoroutine(SpawningTeleportingEnemy());
+        StartCoroutine(SpawnHomingNuclear());
     }
 }

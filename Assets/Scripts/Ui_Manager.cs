@@ -13,7 +13,9 @@ public class Ui_Manager : MonoBehaviour
     [SerializeField] private Text _ammoCount;
     [SerializeField] private Transform bar;
     [SerializeField] private GameObject _explosion;
-    
+    [SerializeField] private GameObject _nuclear;
+
+    private Image _nuclearColour;
     private Animator BlinkingAmmunition;
     public float _barX = 1;
     private float maxBar = 1f;
@@ -21,6 +23,7 @@ public class Ui_Manager : MonoBehaviour
 
     void Start()
     {
+        _nuclearColour = _nuclear.GetComponent<Image>();
         ThePlayer = GameObject.Find("Player").GetComponent<Player>();
         _scoreText.text = "Score : " + 0;
         StartCoroutine(Bar());
@@ -31,11 +34,24 @@ public class Ui_Manager : MonoBehaviour
     {
         ThePlayer.CheckLives();
         Quit();
+        UpdateNuclearState();
     }
 
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score :" + playerScore;
+    }
+
+    public void UpdateNuclearState()
+    {
+        if(ThePlayer._isNuclearActive == false)
+        {
+            _nuclearColour.color = Color.gray;
+        }
+        else if(ThePlayer._isNuclearActive == true)
+        {
+            _nuclearColour.color = Color.white;
+        }
     }
 
     public void UpdateAmmo(int ammo)

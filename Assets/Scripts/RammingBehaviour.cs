@@ -52,7 +52,6 @@ public class RammingBehaviour : MonoBehaviour
     {
         if (collision.tag == "Player") 
         {
-            Debug.Log("adasf");
             playerInRange = true;
             
         }
