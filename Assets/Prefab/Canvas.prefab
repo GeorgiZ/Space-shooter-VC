@@ -288,9 +288,11 @@ MonoBehaviour:
   Restart_Game_Text: {fileID: 9036792010906402864}
   _ammoCount: {fileID: 4256441292753758852}
   bar: {fileID: 0}
+  _bossHpBar: {fileID: 0}
   _explosion: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
     type: 3}
   _nuclear: {fileID: 7934298630332762337}
+  spawnManager: {fileID: 0}
   _barX: 1
 --- !u!222 &8900901398796497084
 CanvasRenderer:

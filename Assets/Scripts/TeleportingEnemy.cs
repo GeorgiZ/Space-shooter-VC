@@ -16,7 +16,11 @@ public class TeleportingEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
+        if(player != null)
+        {
+            player = GameObject.Find("Player").GetComponent<Player>();
+        }
+        
         UiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
     }
 

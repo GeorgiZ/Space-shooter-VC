@@ -16,8 +16,10 @@ public class AggressiveEnemy : MonoBehaviour
 
     void Start()
     {
+    
         player = GameObject.Find("Player").GetComponent<Player>();
         UiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
+ 
     }
 
     // Update is called once per frame

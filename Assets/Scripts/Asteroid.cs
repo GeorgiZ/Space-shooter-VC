@@ -8,7 +8,7 @@ public class Asteroid : MonoBehaviour
     private float rotationSpeed = 1;
     private Animator asteroid;
     private SpawnManager _spawn;
-    public AudioSource boom;
+    private AudioSource boom;
     private BoxCollider2D ThisCollider;
 
     void Start()

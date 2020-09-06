@@ -27,13 +27,15 @@ public class MineProjectile : MonoBehaviour
 
 	void FixedUpdate()
 	{
-
+		if(target != null)
+        {
 			Vector2 point2Target = (Vector2)transform.position - (Vector2)target.transform.position;
 			point2Target.Normalize();
 			float value = Vector3.Cross(point2Target, transform.right).z;
 			rb.angularVelocity = rotatingSpeed * value;
 			rb.velocity = transform.right * speed;
-		
+		}
+
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)

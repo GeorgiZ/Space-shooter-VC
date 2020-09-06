@@ -16,16 +16,24 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _teleportingEnemy;
     [SerializeField] private GameObject _teleportLight;
     [SerializeField] private GameObject _homingNuclearPowerup;
+    [SerializeField] GameObject Boss;
 
+    public bool visualizeBossHpBar = false;
     private Text waveText;
     public GameObject Enemy;
-    private bool _stopSpawning = false;
+    public bool _stopSpawning = false;
     private float enemySpawnRate = 4.0f;
     public int enemyCount;
+    public bool _bossSpawned = false;
 
     private void Start()
     {       
         waveText = _waves.GetComponent<Text>();
+    }
+
+    private void Update()
+    {
+        InvokeBoss();
     }
 
     private void SpawnsNormalEnemy()
@@ -53,33 +61,32 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnAggressiveEnemy()
     {
-        //spawns the aggressive enemy on the left or right side
-        int randomX = Random.Range(0, 2);
-        int random = 0;
-        if (randomX == 1)
-        {
-            random = -11;
-        }
-        else if(randomX == 0)
-        {
-            random = 11;
-        }
-        Vector3 randomPosition = new Vector3(random, 3.0f, 0.0f);
+            //spawns the aggressive enemy on the left or right side
+            int randomX = Random.Range(0, 2);
+            int random = 0;
+            if (randomX == 1)
+            {
+                random = -11;
+            }
+            else if (randomX == 0)
+            {
+                random = 11;
+            }
+            Vector3 randomPosition = new Vector3(random, 3.0f, 0.0f);
 
-        Instantiate(_agressiveEnemy, randomPosition, Quaternion.identity);
-        enemyCount += 1;
-
+            Instantiate(_agressiveEnemy, randomPosition, Quaternion.identity);
+            enemyCount += 1;
     }
 
     private void SpawnTeleportEnemy()
     {
-        float _randomX = Random.Range(-8.8f, 8.8f);
-        float _randomY = Random.Range(-4.5f, 4.5f);
-        Vector3 _random = new Vector3(_randomX, _randomY, 0);
-        GameObject enemy = Instantiate(_teleportingEnemy, _random, Quaternion.identity);
-        GameObject light = Instantiate(_teleportLight, enemy.transform.position, Quaternion.identity); 
-        Destroy(light, 0.57f);
-        enemyCount += 1;
+            float _randomX = Random.Range(-8.8f, 8.8f);
+            float _randomY = Random.Range(-4.5f, 4.5f);
+            Vector3 _random = new Vector3(_randomX, _randomY, 0);
+            GameObject enemy = Instantiate(_teleportingEnemy, _random, Quaternion.identity);
+            GameObject light = Instantiate(_teleportLight, enemy.transform.position, Quaternion.identity);
+            Destroy(light, 0.57f);
+            enemyCount += 1;      
     }
 
     private void ShieldedEnemyChance(GameObject enemy)
@@ -97,17 +104,35 @@ public class SpawnManager : MonoBehaviour
             enemy.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
-    IEnumerator SpawningEnemies()
-    {        
-        yield return new WaitForSeconds(1.0f);
-        waveText.text = "Wave 1";
-        _waves.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
-        _waves.SetActive(false);
 
+    private void SpawnBoss()
+    {
+        Vector3 BossSpawnPosition = new Vector3(0f, 6.2f, 0f);
+        Instantiate(Boss, BossSpawnPosition, Quaternion.identity);
+    }
+
+    private void InvokeBoss()
+    {
+        //spawns the boss 9 seconds after the last wave has finished
+            if (enemyCount == 45 && _bossSpawned == false)
+            {               
+                Invoke("SpawnBoss", 9.0f);
+                _bossSpawned = true;
+            }
+    }
+
+    IEnumerator SpawningEnemies()
+    {
         while (_stopSpawning == false)
         {
-           
+            if (enemyCount == 0)
+            {
+                yield return new WaitForSeconds(1.0f);
+                waveText.text = "Wave 1";
+                _waves.SetActive(true);
+                yield return new WaitForSeconds(1.0f);
+                _waves.SetActive(false);
+            }
             yield return new WaitForSeconds(enemySpawnRate);
             SpawnsNormalEnemy();
             yield return new WaitForSeconds(enemySpawnRate);
@@ -127,16 +152,22 @@ public class SpawnManager : MonoBehaviour
             }
             else if (enemyCount == 30)
             {
-                yield return new WaitForSeconds(1.0f);
-                waveText.text = "Wave 3";
+                yield return new WaitForSeconds(3.0f);
+                waveText.text = "FINAL WAVE ";
                 _waves.SetActive(true);
                 enemySpawnRate = 1.0f;
                 yield return new WaitForSeconds(2.0f);
                 _waves.SetActive(false);
             }
-             else if (enemyCount == 45)
+            else if (enemyCount == 45)
             {
                 _stopSpawning = true;
+                yield return new WaitForSeconds(5.0f);
+                waveText.text = "BOSS INCOMING ";
+                _waves.SetActive(true);
+                yield return new WaitForSeconds(3.0f);
+                _waves.SetActive(false);
+             
             }
             
         }    
@@ -240,9 +271,8 @@ public class SpawnManager : MonoBehaviour
             Vector3 random = new Vector3(randomX, 6.9f, 0f);
 
             Instantiate(Debuff, random, Quaternion.identity);
-
         }
-        
+            
     }
 
     public void OnPlayerDeath()
@@ -252,14 +282,22 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawning()
     {
-        StartCoroutine(SpawnDebuff());
-        StartCoroutine(SpawningEnemies());
-        StartCoroutine(SpawnPowerup());
-        StartCoroutine(SpawnRarePowerup());
-        StartCoroutine(SpawnMediumPowerup());
-        StartCoroutine(SpawnAmmo());
-        StartCoroutine(SpawningAggressiveEnemy());
-        StartCoroutine(SpawningTeleportingEnemy());
-        StartCoroutine(SpawnHomingNuclear());
+        if(_stopSpawning == false)
+        {
+            StartCoroutine(SpawnDebuff());
+            StartCoroutine(SpawningEnemies());
+            StartCoroutine(SpawnPowerup());
+            StartCoroutine(SpawnRarePowerup());
+            StartCoroutine(SpawnMediumPowerup());
+            StartCoroutine(SpawnAmmo());
+            StartCoroutine(SpawningAggressiveEnemy());
+            StartCoroutine(SpawningTeleportingEnemy());
+            StartCoroutine(SpawnHomingNuclear());
+        }
+        else
+        {
+            return;
+        }
+        
     }
 }

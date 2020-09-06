@@ -27,6 +27,9 @@ TagManager:
   - TEnemy
   - HomingNuclearMissile
   - AnyEnemy
+  - Boss
+  - BossHp
+  - NuclearBomb
   layers:
   - Default
   - TransparentFX

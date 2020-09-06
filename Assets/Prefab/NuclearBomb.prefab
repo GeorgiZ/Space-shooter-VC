@@ -73,6 +73,7 @@ MonoBehaviour:
   Parent: {fileID: 7695015042839105674}
   NuclearExplosion: {fileID: 5141651018796764245, guid: e6b692a9c330a724380e80c6b2b3fd39,
     type: 3}
+  _collided: 0
 --- !u!1 &7695015042839105674
 GameObject:
   m_ObjectHideFlags: 0

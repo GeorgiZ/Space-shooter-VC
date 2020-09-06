@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEditor;
-using UnityEditorInternal;
+﻿
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -101,7 +97,7 @@ public class Enemy : MonoBehaviour
         {
             _FireSpeed = Random.Range(2f, 4f);
             _canFire = Time.time + _FireSpeed;
-            GameObject clone = Instantiate(EnemyLaser, transform.position, Quaternion.identity);           
+            Instantiate(EnemyLaser, transform.position, Quaternion.identity);           
         }       
     }
 }

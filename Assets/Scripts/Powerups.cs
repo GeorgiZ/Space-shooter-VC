@@ -19,7 +19,7 @@ public class Powerups : MonoBehaviour
         soundsource = GetComponent<AudioSource>();
         turnoffrender = GetComponent<Renderer>();
         PowerupCollider = gameObject.GetComponent<BoxCollider2D>();
-        player = GameObject.Find("Player").GetComponent<Player>();
+        player = GameObject.Find("Player").GetComponent<Player>();       
     }
 
     void Update()

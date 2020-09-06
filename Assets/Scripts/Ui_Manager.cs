@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 public class Ui_Manager : MonoBehaviour
 {
     [SerializeField] private Text _scoreText;
@@ -12,8 +10,10 @@ public class Ui_Manager : MonoBehaviour
     [SerializeField] private GameObject Restart_Game_Text;
     [SerializeField] private Text _ammoCount;
     [SerializeField] private Transform bar;
+    [SerializeField] private Transform _bossHpBar;
     [SerializeField] private GameObject _explosion;
     [SerializeField] private GameObject _nuclear;
+    [SerializeField] GameObject spawnManager;
 
     private Image _nuclearColour;
     private Animator BlinkingAmmunition;
@@ -27,7 +27,7 @@ public class Ui_Manager : MonoBehaviour
         ThePlayer = GameObject.Find("Player").GetComponent<Player>();
         _scoreText.text = "Score : " + 0;
         StartCoroutine(Bar());
-        BlinkingAmmunition = this.transform.GetChild(4).gameObject.GetComponent<Animator>();       
+        BlinkingAmmunition = this.transform.GetChild(4).gameObject.GetComponent<Animator>();
     }
 
     private void Update()
@@ -90,7 +90,8 @@ public class Ui_Manager : MonoBehaviour
         if (currentLives <= 0)
         {
             StartCoroutine(GmaeOverBehaviour());
-            Instantiate(_explosion, ThePlayer.transform.position, Quaternion.identity);
+            GameObject clone =  Instantiate(_explosion, ThePlayer.transform.position, Quaternion.identity);
+            Destroy(clone, 1.47f);
         }
     }
 
@@ -102,7 +103,7 @@ public class Ui_Manager : MonoBehaviour
         }
     }
 
-    private void BarVisualization()
+    private void ThrusterBarVisualization()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {        
@@ -122,14 +123,11 @@ public class Ui_Manager : MonoBehaviour
         while(1 > 0)
         {
             yield return new WaitForSeconds(0.2f);
-            BarVisualization();
+            ThrusterBarVisualization();
             if(_barX < 0)
             {
                 _barX = 0;
             }
         }  
-    }
-
-    
-  
+    } 
 }
