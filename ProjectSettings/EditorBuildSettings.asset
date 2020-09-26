@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/mainManu.unity
     guid: 3ab46b1e196077a438167d06781eb09a
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/PoweupInfo.unity
+    guid: aa6c38be644aeb8438e4b3c2c610b159
+  - enabled: 1
+    path: Assets/Scenes/EnemyInfo.unity
+    guid: ff754330eee397f4c90c741dec84ee23
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/GameEnd.unity
+    guid: c5bcc61755ac91c409651811b39ad2ca
   m_configObjects: {}

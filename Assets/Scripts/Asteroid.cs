@@ -7,22 +7,19 @@ public class Asteroid : MonoBehaviour
     private Player _player;
     private float rotationSpeed = 1;
     private Animator asteroid;
-
     private SpawnManager _spawn;
+    private AudioSource boom;
+    private BoxCollider2D ThisCollider;
 
-    public AudioSource boom;
-
-    // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         asteroid = GetComponent<Animator>();
         _spawn = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-
         boom = GetComponent<AudioSource>();
+        ThisCollider = gameObject.GetComponent<BoxCollider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         AsteroidRotation();
@@ -32,6 +29,7 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.tag == "Laser")
         {
+            ThisCollider.enabled = false; // not to spawns multiple enemies
             asteroid.SetTrigger("AsteroidExplosion");
             boom.Play();
             _spawn.StartSpawning();
@@ -40,6 +38,7 @@ public class Asteroid : MonoBehaviour
         }
         else if(collision.tag == "Player")
         {
+            ThisCollider.enabled = false;
             asteroid.SetTrigger("AsteroidExplosion");
             boom.Play();
             _spawn.StartSpawning();

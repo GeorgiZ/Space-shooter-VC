@@ -10,6 +10,26 @@ TagManager:
   - Speed
   - Asteroid
   - Elaser
+  - shield
+  - ammo
+  - heal
+  - rocket
+  - RocketPowerup
+  - ExplosionRadius
+  - Debuff
+  - Mine
+  - MineExplosionRadius
+  - MineTriggerRadius
+  - EnemyShield
+  - Aggressive
+  - Powerup
+  - SingleLaser
+  - TEnemy
+  - HomingNuclearMissile
+  - AnyEnemy
+  - Boss
+  - BossHp
+  - NuclearBomb
   layers:
   - Default
   - TransparentFX

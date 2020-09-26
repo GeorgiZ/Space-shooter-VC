@@ -6,86 +6,91 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
-    [SerializeField]
-    private int _lives = 3;
+    [SerializeField] private int _lives = 3;
+    [SerializeField] private float _speed = 10.0f;
+    [SerializeField] private bool _isRocketActive = false;
+    [SerializeField] private bool _isTripleShotActive = false;
+    [SerializeField] private bool _isSpeedActive = false;
+    [SerializeField] private bool _isDebuffActive = false;
+    [SerializeField] private bool _isShieldActive = false;
+    [SerializeField] private float _fireRate = 0.5f;
+    [SerializeField] public int _score;
+    [SerializeField] private int _shieldCharges;
+    [SerializeField] private GameObject TripleShot;
+    [SerializeField] private GameObject LeftWingFire;
+    [SerializeField] private GameObject RightWingFire;
+    [SerializeField] private AudioClip _laser;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private GameObject shield;
+    [SerializeField] private GameObject Rocket;
+    [SerializeField] private CameraShake _Camera;
+    [SerializeField] private GameObject EnemyExplosion;
+    [SerializeField] public bool _isNuclearActive = false;
+    [SerializeField] private GameObject NuclearBomb;
 
-    [SerializeField]
-    private float _speed = 10.0f;
-
-    [SerializeField]
-    private bool isTripleShotActive = false;
-
-    [SerializeField]
-    private bool isSpeedActive = false;
-
-    [SerializeField]
-    private bool isShieldActive = false;
-
-    [SerializeField]
-    private GameObject TripleShot;
-
-    [SerializeField]
-    private float _fireRate = 0.5f;
-
-    [SerializeField]
-    private int score;
-
-    [SerializeField]
-    private GameObject LeftWingFire;
-
-    [SerializeField]
-    private GameObject RightWingFire;
-
-    [SerializeField]
-    private AudioClip _laser;
-
-    [SerializeField]
-    private AudioSource _audioSource;
-
-    [SerializeField]
-    private GameObject ExplodingEnamy;
-    private Ui_Manager _uiManager;
-    private int DmgAmaunt = 1;
-    private float _canFire = 0f;
+    public Animator animator;
     private SpawnManager _spawnManager;
     public GameObject laser;
-    public GameObject shield;
+    private Ui_Manager _uiManager;
+    private int _dmgAmaunt = 1;
+    private float _canFire = 0f;
+    private float _bar;
+    private int _ammunition;
 
-
-
-
-    // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0f, -4.8f, 0f);
+        _Camera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<Ui_Manager>();
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = _laser;
-        
+        _ammunition = 30;
     }
 
     void Update()
     {
-
         Movement();
+        Thrust();
         SpaceToShoot();
+        ShootNuclear();
         DestroyTripleShot();
         Shield();
-
+        SetMaxLives();
+        replenishShield(); // shield cannot be below 0 and above 3 ( replenish to 3 if 0 < shield < 3 )
+        shieldcolour();
         PlayerOnFire();
-
+        _uiManager.ChangeLives(_lives);
+       _ammunition = Mathf.Clamp(_ammunition, 0, 30);
+        EscToExit();
     }
-
+    
     public void Movement()
-    {
-       
+    {      
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 axisMovement = new Vector3(horizontalInput, verticalInput, 0);
-
         transform.Translate(axisMovement * _speed * Time.deltaTime);
 
+        //left animation
+        if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            animator.SetBool("Left", true);
+        }
+        else
+        {
+            animator.SetBool("Left", false);
+        }
+
+        // right animation
+        if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            animator.SetBool("Right", true);
+        }
+        else
+        {
+            animator.SetBool("Right", false);
+        }
 
         if (transform.position.x >= 11.1f)
         {
@@ -104,74 +109,148 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(transform.position.x, 6.96f, 0);
         }
 
-        if (isSpeedActive == true)
+        if (_isSpeedActive == true)
         {
             _speed = 15.0f;
         }
-        else if (isSpeedActive == false)
+        else
         {
             _speed = 10.0f;
         }
+
+        if (_isDebuffActive == true)
+        {
+            _speed = 5.0f;
+        }
+    }
+
+    private void Thrust()
+    {
+        ChangeThrusterBar();
+        if (Input.GetKey(KeyCode.LeftShift) && _bar != 0)
+        {
+            _speed = _speed * 1.4f;
+        }
+    }
+
+    private void ChangeThrusterBar()
+    {
+        _bar = GameObject.Find("Canvas").GetComponent<Ui_Manager>()._barX; //depleting the truster bar by moving the the thruster's sprite bar pivot point
     }
 
     private void Shoot()
     {
         _canFire = Time.time + _fireRate;
 
-        if ( isTripleShotActive == true)
+        if ( _isTripleShotActive == true)
         {
-            Instantiate(TripleShot, transform.position, Quaternion.identity);
-            
+            Instantiate(TripleShot, transform.position, Quaternion.identity); 
+        }
+        else if (_isRocketActive == true)
+        {
+            Instantiate(Rocket, transform.position, Quaternion.identity);              
         }
         else
         {
-            
             Instantiate(laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
-
-        _audioSource.Play();
-            
+        _audioSource.Play();            
     }
 
+    //moved Shoot() in a separate method, not to have nested if statements in Shoot().
     private void SpaceToShoot()
     {
+        _uiManager.UpdateAmmo(_ammunition);
+
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            Shoot();
+            //player cannot shoot if ammo is 0
+            if (_ammunition == 0)
+            {
+                return;
+            }
+            _ammunition -= 1;
+   
+            Shoot();           
+        }
+    }
+
+    private void ShootNuclear()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) && _isNuclearActive == true)
+        {
+            Instantiate(NuclearBomb, transform.position, Quaternion.identity);
+            _isNuclearActive = false;
         }
     }
 
     public void Damage()
     {
-
-        if (isShieldActive == true)
+        //when shield is on one charge and player gets hit disable the shield and dont take dmg on that hit
+        if (_isShieldActive == true && _shieldCharges == 1)
         {
-            isShieldActive = false;
+            _isShieldActive = false;
             shield.SetActive(false);
             return;
         }
-        _lives -= DmgAmaunt;
 
+        _lives -= _dmgAmaunt;
+        _shieldCharges -= 1;
         _uiManager.ChangeLives(_lives);
+        _Camera.TriggerShake();
 
         if ( _lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
-            
-            
+            Destroy(this.gameObject);           
         }
-    } 
+    }
 
     public void Shield()
     {
-        if (isShieldActive == true)
+        if (_isShieldActive == true)
         {
-            DmgAmaunt = 0;
+            _dmgAmaunt = 0;
         }
-        else if (isShieldActive == false)
+        else if (_isShieldActive == false)
         {
-            DmgAmaunt = 1;
+            _dmgAmaunt = 1;          
+        }
+    }
+
+    public void setShield()
+    {
+        _shieldCharges = 3;
+    }
+
+    private void replenishShield()
+    {
+        if (_shieldCharges < 0)
+        {
+            _shieldCharges = 0;
+        }
+        else if (_shieldCharges > 3)
+        {
+            _shieldCharges = 3;
+        }
+    }
+
+    private void shieldcolour()
+    {
+        switch (_shieldCharges)
+        {
+            case 0:
+                shield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
+                break;
+            case 1:
+                shield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.2f);
+                break;
+            case 2:
+                shield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.4f);
+                break;
+            case 3:
+                shield.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                break;
         }
     }
 
@@ -185,79 +264,144 @@ public class Player : MonoBehaviour
 
     public void TripleShotActive()
     {
-        isTripleShotActive = true;
+        _isTripleShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
 
     IEnumerator TripleShotPowerDownRoutine()
     {
-        if(isTripleShotActive == true)
+        if(_isTripleShotActive == true)
         {
             yield return new WaitForSeconds(5.0f);
-            isTripleShotActive = false;
+            _isTripleShotActive = false;
+        }
+    }
+
+    public void RocketsActive()
+    {
+        _isRocketActive = true;
+        StartCoroutine(RocketDownRoutine());
+    }
+
+    public void NuclearChargeActive()
+    {
+        _isNuclearActive = true;
+
+    }
+
+    IEnumerator RocketDownRoutine()
+    {
+        if (_isRocketActive == true)
+        {
+            yield return new WaitForSeconds(5.0f);
+            _isRocketActive = false;
         }
     }
 
     public void SpeedActive()
-    {
-  
-        isSpeedActive = true;
+    { 
+        _isSpeedActive = true;
         StartCoroutine(SpeedPowerupDownRoutine());     
     }
 
     IEnumerator SpeedPowerupDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        isSpeedActive = false;
+        _isSpeedActive = false;
+    }
+
+    public void DebuffActive()
+    {
+        _isDebuffActive = true;
+
+        StartCoroutine(DebuffPowerDownRoutine());
+    }
+
+    IEnumerator DebuffPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isDebuffActive = false;
     }
 
     public void ShieldActive()
-    {
-        isShieldActive = true;
-        shield.SetActive(true);
-        
-
+    {       
+        _isShieldActive = true;
+        shield.SetActive(true);        
     }
 
     public void AddScore()
     {
-        score += 10;
-        _uiManager.UpdateScore(score);
+        _score += 10;
+        _uiManager.UpdateScore(_score);
     }
 
 
-     public void CheckLives()
+    public void CheckLives()
     {
-
             if (Input.GetKeyDown(KeyCode.R) && _lives <= 0)
             {
-            SceneManager.LoadScene(1);
+                SceneManager.LoadScene(1);
             }
     }
 
     private void PlayerOnFire()
     {
-        if (_lives == 2)
-        {
+        if (_lives < 3 && _lives > 1)
+        {            
+            LeftWingFire.SetActive(true);
+            RightWingFire.SetActive(false);
+        }
+        else if (_lives < 2)
+        {           
+            RightWingFire.SetActive(true);
             LeftWingFire.SetActive(true);
         }
-        else if (_lives == 1)
+        else
         {
-            RightWingFire.SetActive(true);
+            RightWingFire.SetActive(false);
+            LeftWingFire.SetActive(false);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy")
-        {
-            GameObject clone = Instantiate(ExplodingEnamy, collision.transform.position, Quaternion.identity);
-            Destroy(clone, 1.47f);
-
-        }
+ 
         if (collision.tag == "Elaser")
         {
             Damage();
+            Destroy(collision.gameObject);
+        }
+        else if(collision.tag == "ammo")
+        {
+            _ammunition += 15;
+        }
+        else if(collision.tag == "heal")
+        {
+            _lives += 2;
+        }
+        else if(collision.tag == "TEnemy")
+        {
+            Damage();
+            Destroy(collision.gameObject);
+            GameObject clone = Instantiate(EnemyExplosion, collision.transform.position, Quaternion.identity);
+            Destroy(clone, 1.47f);
+        }
+
+    }
+
+    private void SetMaxLives()
+    {
+        if (_lives > 3)
+        {
+            _lives = 3;
+        }
+    }
+
+    private void EscToExit()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
