@@ -15,6 +15,7 @@ public class EndGameRestart : MonoBehaviour
     void Update()
     {
         Restart();
+        Exit();
     }
 
     private void Restart()

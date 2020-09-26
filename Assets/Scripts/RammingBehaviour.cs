@@ -27,7 +27,7 @@ public class RammingBehaviour : MonoBehaviour
         if(playerInRange == true)
         {
             seconds += Time.deltaTime;
-            rb.AddForce(-transform.up * _speed);
+            rb.AddForce(-transform.up * _speed *Time.deltaTime);
         }
         // if the player is not in range - the enemy goes back up if it tried to ram the player without going back futher than its starting Y position
         else if (playerInRange == false && Parent.transform.position.y < 3) 
