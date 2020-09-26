@@ -13,6 +13,7 @@ public class FireProjectileRD : MonoBehaviour
 
     private void Movement()
     {
+        // the projectile moves diagonally
         transform.Translate(Vector3.down * Time.deltaTime * _speed);
         transform.Translate(Vector3.right * Time.deltaTime * _speed);
         if (transform.position.y < -6.6f)

@@ -13,8 +13,9 @@ public class FireProjectileD : MonoBehaviour
 
     private void Movement()
     {
+        //the projectile moves down
         transform.Translate(Vector3.down * Time.deltaTime * _speed);
-        if (transform.position.x < -6.6f)
+        if (transform.position.y < -6.6f)
         {
             Destroy(this.gameObject);
         }

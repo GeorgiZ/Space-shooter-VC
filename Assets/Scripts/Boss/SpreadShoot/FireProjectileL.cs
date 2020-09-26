@@ -11,6 +11,7 @@ public class FireProjectileL : MonoBehaviour
 
     private void Movement()
     {
+        //the projectile moves to the left
         transform.Translate(Vector3.left * Time.deltaTime * _speed);
         if (transform.position.x < -10.5f)
         {

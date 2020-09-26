@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossBehaviour : MonoBehaviour
 {
@@ -26,12 +25,10 @@ public class BossBehaviour : MonoBehaviour
     private float _rightCanFire = -1.0f;
     public int _speed = 2;
     private Vector3 _offset;
-    public bool isBossAlive = false;
     // Start is called before the first frame update
     void Start()
     {
         _offset = new Vector3(0.15f, -0.7f, 0.0f);
-        isBossAlive = true;
     }
 
     // Update is called once per frame
@@ -44,7 +41,11 @@ public class BossBehaviour : MonoBehaviour
         ShootSpread();
         
     }
-   
+
+    private void OnDestroy()
+    {
+        LoadEndScene();
+    }
     private void Movement()
     {
         //stops the boss at the centre of the screen
@@ -127,12 +128,24 @@ public class BossBehaviour : MonoBehaviour
         BossHp.transform.localScale -= new Vector3( 4, 0, 0);
         if (BossHp.transform.localScale.x < 0)
         {
-            Destroy(this.gameObject);
+            //endgame scene will be loadded in 4 seconds after the Boss is killed
+            Invoke("DestroyObject", 4.0f);
+            gameObject.SetActive(false);
             GameObject clone1 =  Instantiate(ExplosionOnDeath, transform.position, Quaternion.identity);
             GameObject clone2 = Instantiate(ExplosionOnDeath, new Vector3(transform.position.x, transform.position.y -1, transform.position.z), Quaternion.identity);
             Destroy(clone1, 1.47f);
             Destroy(clone2, 1.47f);
+            
         }
     }
 
+    private void LoadEndScene()
+    {
+        SceneManager.LoadScene(4);
+    }
+
+    private void DestroyObject()
+    {
+        Destroy(this.gameObject);
+    }
 }

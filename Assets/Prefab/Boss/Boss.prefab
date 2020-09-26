@@ -97,7 +97,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.015200615, y: -0.040534973}
@@ -155,6 +155,18 @@ MonoBehaviour:
   BossHp: {fileID: 2458319933446143411}
   ExplosionOnDeath: {fileID: 6935326395478163948, guid: 78add875b3ca0fa4090e7bbf558a53fc,
     type: 3}
+  LFireProjectile: {fileID: 691735310006800655, guid: 9c274174e2f68ba4fb6ec4cdd5b0be40,
+    type: 3}
+  LDFireProjectile: {fileID: 691735310006800655, guid: 6d5977e2394d54747b06261005fce284,
+    type: 3}
+  DFireProjectile: {fileID: 691735310006800655, guid: 048037eb352320f4582c85f2110f2658,
+    type: 3}
+  DRFireProjectile: {fileID: 691735310006800655, guid: e2014f2b4e6cde64d92741f9c544ef73,
+    type: 3}
+  RFireProjectile: {fileID: 691735310006800655, guid: a58d95993cdae7241b1e52a8bb66b3cc,
+    type: 3}
+  SpawnManager: {fileID: 0}
+  bossIsDead: 0
   _speed: 2
   isBossAlive: 0
 --- !u!1 &1199941668130382759

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +17,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _homingNuclearPowerup;
     [SerializeField] GameObject Boss;
 
-    public bool visualizeBossHpBar = false;
     private Text waveText;
     public GameObject Enemy;
     public bool _stopSpawning = false;
@@ -300,4 +298,5 @@ public class SpawnManager : MonoBehaviour
         }
         
     }
+
 }

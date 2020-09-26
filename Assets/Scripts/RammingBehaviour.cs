@@ -33,7 +33,7 @@ public class RammingBehaviour : MonoBehaviour
         else if (playerInRange == false && Parent.transform.position.y < 3) 
         {
             rb.velocity = Vector2.zero;
-            rb.AddForce(transform.up * 15);
+            rb.AddForce(transform.up * 70);
 
         }
         else if(Parent.transform.position.y > 3)

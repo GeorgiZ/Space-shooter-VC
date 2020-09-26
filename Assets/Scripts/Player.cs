@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] public bool _isNuclearActive = false;
     [SerializeField] private GameObject NuclearBomb;
 
+    public Animator animator;
     private SpawnManager _spawnManager;
     public GameObject laser;
     private Ui_Manager _uiManager;
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
         PlayerOnFire();
         _uiManager.ChangeLives(_lives);
        _ammunition = Mathf.Clamp(_ammunition, 0, 30);
+        EscToExit();
     }
     
     public void Movement()
@@ -69,6 +71,26 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 axisMovement = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(axisMovement * _speed * Time.deltaTime);
+
+        //left animation
+        if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            animator.SetBool("Left", true);
+        }
+        else
+        {
+            animator.SetBool("Left", false);
+        }
+
+        // right animation
+        if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            animator.SetBool("Right", true);
+        }
+        else
+        {
+            animator.SetBool("Right", false);
+        }
 
         if (transform.position.x >= 11.1f)
         {
@@ -372,6 +394,14 @@ public class Player : MonoBehaviour
         if (_lives > 3)
         {
             _lives = 3;
+        }
+    }
+
+    private void EscToExit()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
